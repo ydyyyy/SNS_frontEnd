@@ -208,7 +208,7 @@
     },
     computed: {
       title() {
-        return "写文章 - For Fun";
+        return "创建项目 - SNS 社交网络平台系统";
       },
     },
     methods: {
