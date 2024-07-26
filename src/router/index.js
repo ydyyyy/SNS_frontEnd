@@ -61,6 +61,34 @@ const router = new Router({
           name: "Project",
           component: () => import("@/views/project/Project"),
         },
+        {
+          path: "project/view/:id",
+          component: () => import("@/views/project/ProjectView"),
+          meta: {
+            requireLogin: true,
+          },
+        },
+        {
+          path: "project/create/:id?",
+          component: () => import("@/views/project/ProjectCreate"),
+          meta: {
+            requireLogin: true,
+          },
+        },
+        {
+          path: "project/asklist",
+          component: () => import("@/views/project/ProjectAskList"),
+          meta: {
+            requireLogin: true,
+          },
+        },
+        {
+          path: "project/releaselist",
+          component: () => import("@/views/project/ProjectReList"),
+          meta: {
+            requireLogin: true,
+          },
+        },
         // 活动模块
         {
           path: "activity",

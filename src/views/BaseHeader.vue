@@ -107,7 +107,8 @@ export default {
         "/project": [
           { index: "/project", label: "项目首页" },
           { index: "/project/create", label: "创建项目" },
-          { index: "/project/list", label: "项目列表" },
+          { index: "/project/asklist", label: "我申请的项目" },
+          { index: "/project/releaselist", label: "我发布的项目" },
         ],
         // 添加更多导航项及其对应的菜单数组
         // ...
