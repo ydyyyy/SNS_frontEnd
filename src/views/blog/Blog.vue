@@ -68,6 +68,7 @@
       getNewArtices() {
         let that = this
         getNewArtices().then(data => {
+          console.log(data, '我是getNewArtices获取到的数据')
           that.newArticles = data.data
         }).catch(error => {
           if (error !== 'error') {
@@ -80,6 +81,7 @@
       getHotTags() {
         let that = this
         getHotTags().then(data => {
+          console.log(data, '我是getHotTags获取到的数据')
           that.hotTags = data.data
         }).catch(error => {
           if (error !== 'error') {
@@ -90,6 +92,7 @@
       },
       listArchives() {
         listArchives().then((data => {
+          console.log(data, '我是listArchives获取到的文章归档数据')
           this.archives = data.data
         })).catch(error => {
           if (error !== 'error') {

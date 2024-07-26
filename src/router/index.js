@@ -45,11 +45,13 @@ const router = new Router({
           component: () => import("@/views/blog/BlogAllCategoryTag"),
         },
         {
-          path: "blog/:type/:id",
+          path: "blog/type/:type/:id",
+          name: "BlogCategoryTag",
           component: () => import("@/views/blog/BlogCategoryTag"),
         },
         {
           path: "blog/write/:id?",
+          name: "BlogWrite",
           component: () => import("@/views/blog/BlogWrite"),
           meta: {
             requireLogin: true,

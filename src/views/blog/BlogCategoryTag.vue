@@ -78,6 +78,7 @@
       getCategoryDetail(id) {
         let that = this
         getCategoryDetail(id).then(data => {
+          console.log(data,"我是getCategoryDetail请求获取的分类后的文章数据")
           that.ct = data.data
         }).catch(error => {
           if (error !== 'error') {
@@ -88,6 +89,7 @@
       getTagDetail(id) {
         let that = this
         getTagDetail(id).then(data => {
+          console.log(data,"我是getTagDetail请求获取的标签的数据")
           that.ct = data.data
         }).catch(error => {
           if (error !== 'error') {

@@ -47,6 +47,7 @@ export default new Vuex.Store({
       let that = this
       return new Promise((resolve, reject) => {
         getUserInfo().then(data => {
+          console.log(data,"我是获取用户信息")
           if (data.data) {
             commit('SET_ACCOUNT', data.data.account)
             commit('SET_NAME', data.data.nickname)
@@ -69,7 +70,7 @@ export default new Vuex.Store({
     logout({commit, state}) {
       return new Promise((resolve, reject) => {
         logout().then(data => {
-
+          console.log(data,"我是登出")
           commit('SET_TOKEN', '')
           commit('SET_ACCOUNT', '')
           commit('SET_NAME', '')

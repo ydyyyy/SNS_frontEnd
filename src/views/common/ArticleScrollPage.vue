@@ -74,7 +74,6 @@
         that.loading = true
 
         getArticles(that.query, that.innerPage).then(data => {
-
           let newArticles = data.data
           if (newArticles && newArticles.length > 0) {
             that.innerPage.pageNumber += 1

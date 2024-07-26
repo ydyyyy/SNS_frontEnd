@@ -1,6 +1,6 @@
 import request from '@/request'
 
-
+//已完成
 export function getArticles(query, page) {
   return request({
     url: '/articles',
@@ -17,35 +17,35 @@ export function getArticles(query, page) {
     }
   })
 }
-
+//已完成
 export function getHotArtices() {
   return request({
     url: '/articles/hot',
     method: 'get'
   })
 }
-
+//已完成
 export function getNewArtices() {
   return request({
     url: '/articles/new',
     method: 'get'
   })
 }
-
+//已完成
 export function viewArticle(id) {
   return request({
     url: `/articles/view/${id}`,
     method: 'get'
   })
 }
-
+// 用不上
 export function getArticlesByCategory(id) {
   return request({
     url: `/articles/category/${id}`,
     method: 'get'
   })
 }
-
+// 用不上
 export function getArticlesByTag(id) {
   return request({
     url: `/articles/tag/${id}`,
@@ -53,7 +53,7 @@ export function getArticlesByTag(id) {
   })
 }
 
-
+// 已完成
 export function publishArticle(article) {
   return request({
     url: '/articles/publish',
@@ -61,14 +61,14 @@ export function publishArticle(article) {
     data: article
   })
 }
-
+// 已完成
 export function listArchives() {
   return request({
     url: '/articles/listArchives',
     method: 'get'
   })
 }
-
+// 已完成
 export function getArticleById(id) {
   return request({
     url: `/articles/${id}`,

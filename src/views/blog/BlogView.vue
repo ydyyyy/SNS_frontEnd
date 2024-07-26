@@ -165,17 +165,18 @@
     },
     methods: {
       tagOrCategory(type, id) {
-        this.$router.push({path: `/${type}/${id}`})
+        this.$router.push({path: `/blog/${type}/${id}`})
       },
       editArticle() {
-        this.$router.push({path: `/write/${this.article.id}`})
+        this.$router.push({path: `/blog/write/${this.article.id}`})
       },
       getArticle() {
         let that = this
         viewArticle(that.$route.params.id).then(data => {
+          console.log(data, '我是viewArticle获取到的数据')
           Object.assign(that.article, data.data)
           that.article.editor.value = data.data.body.content
-
+          console.log("wolailaaaaaaa")
           that.getCommentsByArticle()
         }).catch(error => {
           if (error !== 'error') {
@@ -189,8 +190,9 @@
           return;
         }
         that.comment.article.id = that.article.id
-
+        console.log(that.comment, '我是评论数据')
         publishComment(that.comment).then(data => {
+          console.log(data, '我是publishComment获取到的评论数据')
           that.$message({type: 'success', message: '评论成功', showClose: true})
           that.comments.unshift(data.data)
           that.commentCountsIncrement()
@@ -204,6 +206,7 @@
       getCommentsByArticle() {
         let that = this
         getCommentsByArticle(that.article.id).then(data => {
+          console.log(data, '我是getCommentsByArticle获取到的评论数据')
           that.comments = data.data
         }).catch(error => {
           if (error !== 'error') {

@@ -1,29 +1,15 @@
-import request from '@/request'
-
-export function getAllCategorys() {
-  return request({
-    url: '/categorys',
-    method: 'get',
-  })
-}
-
+import request from "@/request";
+// 已写好接口文档
 export function getAllCategorysDetail() {
   return request({
-    url: '/categorys/detail',
-    method: 'get',
-  })
+    url: "/categorys/detail",
+    method: "get",
+  });
 }
-
-export function getCategory(id) {
-  return request({
-    url: `/categorys/${id}`,
-    method: 'get',
-  })
-}
-
+// 已写好接口文档
 export function getCategoryDetail(id) {
   return request({
     url: `/categorys/detail/${id}`,
-    method: 'get',
-  })
+    method: "get",
+  });
 }

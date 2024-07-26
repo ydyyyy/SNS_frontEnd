@@ -96,12 +96,13 @@ export default {
   },
   methods: {
     view(id) {
-      this.$router.push({ path: `/blog/${this.currentActiveName}/${id}` });
+      this.$router.push({ path: `/blog/type/${this.currentActiveName}/${id}` });
     },
     getCategorys() {
       let that = this;
       getAllCategorysDetail()
         .then((data) => {
+          console.log(data,"我是getAllCategorysDetail获取的数据");
           that.categorys = data.data;
         })
         .catch((error) => {
@@ -118,6 +119,7 @@ export default {
       let that = this;
       getAllTagsDetail()
         .then((data) => {
+          console.log(data,"我是getAllTagsDetail获取的数据");
           that.tags = data.data;
         })
         .catch((error) => {

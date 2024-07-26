@@ -1,87 +1,86 @@
 <template>
   <div id="write" v-title :data-title="title">
-      
-      <div>
-        <div class="me-write-btn" style="margin-right: 10px;">
-          <el-button type="success" round @click="publishShow">发布</el-button>
-          <el-button type="warning" round @click="cancel">取消</el-button>
-        </div>
+    <div>
+      <div class="me-write-btn" style="margin-right: 10px">
+        <el-button type="success" round @click="publishShow">发布</el-button>
+        <el-button type="warning" round @click="cancel">取消</el-button>
       </div>
-    
-      <el-container class="me-area me-write-box">
-        <el-main class="me-write-main">
-          <div class="me-write-title">
-            <el-input
-              resize="none"
-              type="textarea"
-              autosize
-              v-model="articleForm.title"
-              placeholder="请输入标题"
-              class="me-write-input"
-            >
-            </el-input>
-          </div>
-          <div
-            id="placeholder"
-            style="visibility: hidden; height: 89px; display: none"
-          ></div>
-          <markdown-editor
-            :editor="articleForm.editor"
-            class="me-write-editor"
-          ></markdown-editor>
-        </el-main>
-      </el-container>
+    </div>
 
-      <el-dialog
-        title="摘要 分类 标签"
-        :visible.sync="publishVisible"
-        :close-on-click-modal="false"
-        custom-class="me-dialog"
-      >
-        <el-form :model="articleForm" ref="articleForm" :rules="rules">
-          <el-form-item prop="summary">
-            <el-input
-              type="textarea"
-              v-model="articleForm.summary"
-              :rows="6"
-              placeholder="请输入摘要"
-            >
-            </el-input>
-          </el-form-item>
-          <el-form-item label="文章分类" prop="category">
-            <el-select
-              v-model="articleForm.category"
-              value-key="id"
-              placeholder="请选择文章分类"
-            >
-              <el-option
-                v-for="c in categorys"
-                :key="c.id"
-                :label="c.categoryname"
-                :value="c"
-              ></el-option>
-            </el-select>
-          </el-form-item>
-
-          <el-form-item label="文章标签" prop="tags">
-            <el-checkbox-group v-model="articleForm.tags">
-              <el-checkbox
-                v-for="t in tags"
-                :key="t.id"
-                :label="t.id"
-                name="tags"
-                >{{ t.tagname }}</el-checkbox
-              >
-            </el-checkbox-group>
-          </el-form-item>
-        </el-form>
-        <div slot="footer" class="dialog-footer">
-          <el-button @click="publishVisible = false">取 消</el-button>
-          <el-button type="primary" @click="publish('articleForm')"
-            >发布</el-button
+    <el-container class="me-area me-write-box">
+      <el-main class="me-write-main">
+        <div class="me-write-title">
+          <el-input
+            resize="none"
+            type="textarea"
+            autosize
+            v-model="articleForm.title"
+            placeholder="请输入标题"
+            class="me-write-input"
           >
+          </el-input>
         </div>
-      </el-dialog>
+        <div
+          id="placeholder"
+          style="visibility: hidden; height: 89px; display: none"
+        ></div>
+        <markdown-editor
+          :editor="articleForm.editor"
+          class="me-write-editor"
+        ></markdown-editor>
+      </el-main>
+    </el-container>
+
+    <el-dialog
+      title="摘要 分类 标签"
+      :visible.sync="publishVisible"
+      :close-on-click-modal="false"
+      custom-class="me-dialog"
+    >
+      <el-form :model="articleForm" ref="articleForm" :rules="rules">
+        <el-form-item prop="summary">
+          <el-input
+            type="textarea"
+            v-model="articleForm.summary"
+            :rows="6"
+            placeholder="请输入摘要"
+          >
+          </el-input>
+        </el-form-item>
+        <el-form-item label="文章分类" prop="category">
+          <el-select
+            v-model="articleForm.category"
+            value-key="id"
+            placeholder="请选择文章分类"
+          >
+            <el-option
+              v-for="c in categorys"
+              :key="c.id"
+              :label="c.categoryname"
+              :value="c"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+
+        <el-form-item label="文章标签" prop="tags">
+          <el-checkbox-group v-model="articleForm.tags">
+            <el-checkbox
+              v-for="t in tags"
+              :key="t.id"
+              :label="t.id"
+              name="tags"
+              >{{ t.tagname }}</el-checkbox
+            >
+          </el-checkbox-group>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="publishVisible = false">取 消</el-button>
+        <el-button type="primary" @click="publish('articleForm')"
+          >发布</el-button
+        >
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -89,12 +88,13 @@
 import BaseHeader from "@/views/BaseHeader";
 import MarkdownEditor from "@/components/markdown/MarkdownEditor";
 import { publishArticle, getArticleById } from "@/api/article";
-import { getAllCategorys } from "@/api/category";
-import { getAllTags } from "@/api/tag";
+import { getAllCategorysDetail } from "@/api/category";
+import { getAllTagsDetail } from "@/api/tag";
 
 export default {
   name: "BlogWrite",
   mounted() {
+    console.log("this.$route.params.id", this.$route.params.id);
     if (this.$route.params.id) {
       this.getArticleById(this.$route.params.id);
     }
@@ -184,6 +184,7 @@ export default {
       let that = this;
       getArticleById(id)
         .then((data) => {
+          console.log(data, "我是getArticleById获取到的数据");
           Object.assign(that.articleForm, data.data);
           that.articleForm.editor.value = data.data.body.content;
 
@@ -263,13 +264,14 @@ export default {
 
           publishArticle(article)
             .then((data) => {
+              console.log(data, "我是publishArticle返回的数据");
               loading.close();
               that.$message({
                 message: "发布成功啦",
                 type: "success",
                 showClose: true,
               });
-              that.$router.push({ path: `/view/${data.data.articleId}` });
+              that.$router.push({ path: `/blog/view/${data.data.articleId}` });
             })
             .catch((error) => {
               loading.close();
@@ -297,8 +299,9 @@ export default {
     },
     getCategorysAndTags() {
       let that = this;
-      getAllCategorys()
+      getAllCategorysDetail()
         .then((data) => {
+          console.log(data, "我是getAllCategorysDetail获取到的数据");
           that.categorys = data.data;
         })
         .catch((error) => {
@@ -311,8 +314,9 @@ export default {
           }
         });
 
-      getAllTags()
+      getAllTagsDetail()
         .then((data) => {
+          console.log(data, "getAllTagsDetail获取到的数据");
           that.tags = data.data;
         })
         .catch((error) => {
@@ -355,7 +359,6 @@ export default {
 </script>
 
 <style>
-
 .me-write-info {
   line-height: 60px;
   font-size: 18px;

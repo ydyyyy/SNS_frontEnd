@@ -108,6 +108,9 @@ export default {
   padding: 0px;
   line-height: 16px;
 }
+.me-area{
+  left: 100px;
+}
 
 .me-month-list {
   margin-top: 10px;
