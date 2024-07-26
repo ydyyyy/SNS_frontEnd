@@ -67,6 +67,22 @@ const router = new Router({
           name: "Activity",
           component: () => import("@/views/activity/Activity"),
         },
+        {
+          path: "activity/myActivity",
+          component: () => import("@/views/activity/MyActivity"),
+        },
+        {
+          path: "activity/view/:id",
+          component: () => import("@/views/activity/ActivityView"),
+        },
+        {
+          path: "activity/:type/all",
+          component: () => import("@/views/activity/ActivityAllCategoryTag"),
+        },
+        {
+          path: "activity/:type/:id",
+          component: () => import("@/views/activity/ActivityCategoryTag"),
+        },
         // 内推模块
         {
           path: "recommend",

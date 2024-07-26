@@ -109,6 +109,15 @@ export default {
           { index: "/project/create", label: "创建项目" },
           { index: "/project/list", label: "项目列表" },
         ],
+        "/activity": [
+          { index: "/activity", label: "首页" },
+          { index: "/activity/category/all", label: "活动分类" },
+          { index: "/activity/tag/all", label: "标签" },
+          { index: "/activity/archives", label: "活动归档" },
+          { index: "/activity/log", label: "日志" },
+          { index: "/activity/messageBoard", label: "留言板" },
+          { index: "/activity/write", label: "发布活动" },
+        ],
         // 添加更多导航项及其对应的菜单数组
         // ...
       },
