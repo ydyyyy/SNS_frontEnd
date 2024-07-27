@@ -10,7 +10,7 @@
 
       <el-aside>
 
-        <card-me class="me-area"></card-me>
+        <!-- <card-me class="me-area"></card-me> -->
         <card-tag :tags="hotTags"></card-tag>
 
         <card-article cardHeader="最热文章" :articles="hotArticles"></card-article>

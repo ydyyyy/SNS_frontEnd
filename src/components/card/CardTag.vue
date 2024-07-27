@@ -29,7 +29,7 @@
         this.$router.push('/blog/tag/all')
       },
       tag(id) {
-        this.$router.push({path: `/blog/tag/${id}`})
+        this.$router.push({path: `/blog/type/tag/${id}`})
       }
     }
   }

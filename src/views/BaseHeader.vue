@@ -70,6 +70,9 @@
               <template slot="title">
                 <img class="me-header-picture" :src="user.avatar" />
               </template>
+              <el-menu-item index @click="goToProfile">
+                <i class="el-icon-back"></i>个人中心</el-menu-item
+                >
               <el-menu-item index @click="logout"
                 ><i class="el-icon-back"></i>退出</el-menu-item
               >
@@ -140,6 +143,9 @@ export default {
             that.$message({ message: error, type: "error", showClose: true });
           }
         });
+    },
+    goToProfile() {
+      this.$router.push({ path: '/personCenter' });
     },
     navigateTo(path) {
       this.currentActiveIndex = path; // 更新激活项

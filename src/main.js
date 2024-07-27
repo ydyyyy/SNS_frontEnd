@@ -1,7 +1,7 @@
 
 import Vue from 'vue'
 import App from './App'
-
+import 'font-awesome/css/font-awesome.min.css';
 import router from './router'
 import store from './store'
 

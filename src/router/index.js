@@ -75,12 +75,13 @@ const router = new Router({
           name: "Recommend",
           component: () => import("@/views/recommend/Recommend"),
         },
+        // 个人中心
+        {
+          path: "/personCenter",
+          name: "PersonCenter",
+          component: () => import("@/views/PersonCenter"),
+        },
       ],
-    },
-    {
-      path: "/personCenter",
-      name: "PersonCenter",
-      component: () => import("@/views/PersonCenter"),
     },
     {
       path: "/login",
