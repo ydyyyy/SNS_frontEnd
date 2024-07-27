@@ -75,6 +75,30 @@ const router = new Router({
           name: "Recommend",
           component: () => import("@/views/recommend/Recommend"),
         },
+        {
+          path: "recommend/archives/:year?/:month?",
+          component: () => import("@/views/recommend/RecommendArchive"),
+        },
+        {
+          path: "recommend/view/:id",
+          component: () => import("@/views/recommend/RecommendView"),
+        },
+        {
+          path: "recommend/:type/all",
+          component: () => import("@/views/recommend/RecommendAllCategoryTag"),
+        },
+        {
+          path: "recommend/type/:type/:id",
+          component: () => import("@/views/recommend/RecommendCategoryTag"),
+        },
+        {
+          path: "recommend/write/:id?",
+          name: "RecommendWrite",
+          component: () => import("@/views/recommend/RecommendWrite"),
+          meta: {
+            requireLogin: true,
+          },
+        },
         // 个人中心
         {
           path: "/personCenter",

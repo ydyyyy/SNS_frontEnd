@@ -9,11 +9,21 @@
       <div class="social">
         <span>Share your profile</span>
         <div class="social-links">
-          <a @click="showTool(qq)"><i class="fa fa-weixin" aria-hidden="true"></i></a>
-          <a @click="showTool(qq)"><i class="fa fa-qq" aria-hidden="true"></i></a>
-          <a @click="showTool(qq)"><i class="fa fa-envelope" aria-hidden="true"></i></a>
-          <a @click="showTool(github)"><i class="fa fa-github" aria-hidden="true"></i></a>
-          <a @click="showTool(qq)"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+          <a @click="showTool(qq)"
+            ><i class="fa fa-weixin" aria-hidden="true"></i
+          ></a>
+          <a @click="showTool(qq)"
+            ><i class="fa fa-qq" aria-hidden="true"></i
+          ></a>
+          <a @click="showTool(qq)"
+            ><i class="fa fa-envelope" aria-hidden="true"></i
+          ></a>
+          <a @click="showTool(github)"
+            ><i class="fa fa-github" aria-hidden="true"></i
+          ></a>
+          <a @click="showTool(qq)"
+            ><i class="fa fa-facebook" aria-hidden="true"></i
+          ></a>
         </div>
       </div>
     </div>
@@ -105,7 +115,7 @@ export default {
 }
 </style>
 
-<style >
+<style>
 .wrapper {
   display: flex;
   width: 100%;

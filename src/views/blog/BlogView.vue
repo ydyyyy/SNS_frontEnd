@@ -165,7 +165,7 @@
     },
     methods: {
       tagOrCategory(type, id) {
-        this.$router.push({path: `/blog/${type}/${id}`})
+        this.$router.push({path: `/blog/type/${type}/${id}`})
       },
       editArticle() {
         this.$router.push({path: `/blog/write/${this.article.id}`})

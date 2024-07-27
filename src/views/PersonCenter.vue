@@ -3,6 +3,7 @@
     <el-row class="row-container" :gutter="90">
       <el-col :span="10" class="card-me" >
         <card-me class="me-area"></card-me>
+        <button-me class="me-button"></button-me>
       </el-col>
       <el-col :span="14" >
         <section class="pricing-table">
@@ -46,10 +47,12 @@
 
 <script>
 import CardMe from "@/components/card/CardMe";
+import ButtonMe from "@/components/button/ButtonMe";
 export default {
   name: "PersonCenter",
   components: {
     "card-me": CardMe,
+    "button-me": ButtonMe,
   },
   data() {
     return {};
@@ -59,8 +62,12 @@ export default {
 </script>
 
 <style scoped>
+.me-button {
+  margin-top: 60px;
+  margin-left: 95px
+}
 .me-area{
-  margin-top: 75px;
+  margin-top: 10px;
 }
 .pricing-table {
   display: flex;

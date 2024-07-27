@@ -99,7 +99,7 @@ export default {
       currentActiveIndex: this.activeIndex || "/blog", // 默认激活项
       menuItems: {
         "/blog": [
-          { index: "/blog", label: "首页" },
+          { index: "/blog", label: "博客首页" },
           { index: "/blog/category/all", label: "文章分类" },
           { index: "/blog/tag/all", label: "标签" },
           { index: "/blog/archives", label: "文章归档" },
@@ -107,10 +107,12 @@ export default {
           { index: "/blog/messageBoard", label: "留言板" },
           { index: "/blog/write", label: "写文章" },
         ],
-        "/project": [
-          { index: "/project", label: "项目首页" },
-          { index: "/project/create", label: "创建项目" },
-          { index: "/project/list", label: "项目列表" },
+        "/recommend": [
+          { index: "/recommend", label: "内推首页" },
+          { index: "/recommend/category/all", label: "内推分类" },
+          { index: "/recommend/tag/all", label: "公司" },
+          { index: "/recommend/archives", label: "内推归档" },
+          { index: "/recommend/write", label: "发布内推" },
         ],
         // 添加更多导航项及其对应的菜单数组
         // ...

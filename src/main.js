@@ -4,7 +4,7 @@ import App from './App'
 import 'font-awesome/css/font-awesome.min.css';
 import router from './router'
 import store from './store'
-
+import './api/mock/mock'
 import lodash from 'lodash'
 
 import ElementUI from 'element-ui'
