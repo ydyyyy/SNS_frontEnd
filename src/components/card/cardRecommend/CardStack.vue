@@ -1,7 +1,7 @@
 <template>
     <el-card :body-style="{ padding: '8px 18px' }">
       <div slot="header" class="me-tag-header">
-        <span>最热公司</span>
+        <span>最热技术栈</span>
         <a @click="moreTags" class="me-pull-right me-tag-more">查看全部</a>
       </div>
   
@@ -26,10 +26,10 @@
       },
       methods: {
         moreTags() {
-          this.$router.push('/blog/tag/all')
+          this.$router.push('/recommend/tag/all')
         },
         tag(id) {
-          this.$router.push({path: `/blog/type/tag/${id}`})
+          this.$router.push({path: `/recommend/type/tag/${id}`})
         }
       }
     }

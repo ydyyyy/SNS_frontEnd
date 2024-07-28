@@ -109,8 +109,8 @@ export default {
         ],
         "/recommend": [
           { index: "/recommend", label: "内推首页" },
-          { index: "/recommend/category/all", label: "内推分类" },
-          { index: "/recommend/tag/all", label: "公司" },
+          { index: "/recommend/category/all", label: "公司分类" },
+          { index: "/recommend/tag/all", label: "技术栈分类" },
           { index: "/recommend/archives", label: "内推归档" },
           { index: "/recommend/write", label: "发布内推" },
         ],

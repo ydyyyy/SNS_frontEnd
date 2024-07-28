@@ -10,7 +10,7 @@
     import {getRecommend} from '@/api/recommendApi/recommend'
   
     export default {
-      name: "ArticleScrollPage",
+      name: "RecommendScrollPage",
       props: {
         offset: {
           type: Number,
@@ -94,7 +94,7 @@
       },
       components: {
         'recommend-item': RecommendItem,
-        'scroll-page': ScrollPage
+        'scroll-page': ScrollPage,
       }
   
     }

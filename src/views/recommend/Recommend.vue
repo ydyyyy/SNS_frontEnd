@@ -10,7 +10,7 @@
   
         <el-aside>
   
-          <card-company :tags="hotTags"></card-company>
+          <card-stack :tags="hotTags"></card-stack>
   
           <card-recommend cardHeader="最热内推" :articles="hotArticles"></card-recommend>
   
@@ -27,11 +27,11 @@
   <script>
     import CardRecommend from '@/components/card/cardRecommend/CardRecommend'
     import CardRecArchive from '@/components/card/cardRecommend/CardRecArchive'
-    import CardCompany from '@/components/card/cardRecommend/CardCompany'
+    import CardStack from '@/components/card/cardRecommend/CardStack'
     import RecommendScrollPage from '@/views/common/RecommendScrollPage'
   
     import {getRecommend, getHotRecommend, getNewRecommend} from '@/api/recommendApi/recommend'
-    import {getHotCompany} from '@/api/recommendApi/company'
+    import {getHotStack} from '@/api/recommendApi/stack'
     import {listRecommendArchives} from '@/api/recommendApi/recommend'
   
     export default {
@@ -39,7 +39,7 @@
       created() {
         this.getHotRecommend()
         this.getNewRecommend()
-        this.getHotCompany()
+        this.getHotStack()
         this.listRecommendArchives()
       },
       data() {
@@ -76,10 +76,10 @@
           })
   
         },
-        getHotCompany() {
+        getHotStack() {
           let that = this
-          getHotCompany().then(data => {
-            console.log(data, '我是getHotCompany获取到的数据')
+          getHotStack().then(data => {
+            console.log(data, '我是getHotStack获取到的数据')
             that.hotTags = data.data
           }).catch(error => {
             if (error !== 'error') {
@@ -102,7 +102,7 @@
       },
       components: {
         'card-recommend': CardRecommend,
-        'card-company': CardCompany,
+        'card-stack': CardStack,
         RecommendScrollPage,
         CardRecArchive
       }

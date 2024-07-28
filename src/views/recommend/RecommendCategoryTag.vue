@@ -29,7 +29,7 @@
   <script>
     import RecommendScrollPage from '@/views/common/RecommendScrollPage'
     import {getArticlesByCategory, getArticlesByTag} from '@/api/article'
-    import {getCompanyDetail} from '@/api/recommendApi/company'
+    import {getStackDetail} from '@/api/recommendApi/stack'
     import {getIndustryDetail} from '@/api/recommendApi/industry'
     import defaultAvatar from '@/assets/img/logo.png'
   
@@ -67,7 +67,7 @@
           let id = this.$route.params.id
           let type = this.$route.params.type
           if ('tag' === type) {
-            this.getCompanyDetail(id)
+            this.getStackDetail(id)
             this.article.query.tagId = id
           } else {
             this.getAllIndustryDetail(id)
@@ -86,10 +86,10 @@
             }
           })
         },
-        getCompanyDetail(id) {
+        getStackDetail(id) {
           let that = this
-          getCompanyDetail(id).then(data => {
-            console.log(data,"我是getCompanyDetail请求获取的标签的数据")
+          getStackDetail(id).then(data => {
+            console.log(data,"我是getStackDetail请求获取的标签的数据")
             that.ct = data.data
           }).catch(error => {
             if (error !== 'error') {

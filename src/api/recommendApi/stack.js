@@ -1,23 +1,23 @@
 import request from '@/request'
 // 已写好接口文档
-export function getAllCompanyDetail() {
+export function getAllStackDetail() {
   return request({
-    url: '/company/detail',
+    url: '/stack/detail',
     method: 'get',
   })
 }
 // 已写好接口文档
-export function getHotCompany() {
+export function getHotStack() {
   return request({
-    url: '/company/hot',
+    url: '/stack/hot',
     method: 'get',
   })
 }
 
 //已写好接口文档
-export function getCompanyDetail(id) {
+export function getStackDetail(id) {
   return request({
-    url: `/company/detail/${id}`,
+    url: `/stack/detail/${id}`,
     method: 'get',
   })
 }

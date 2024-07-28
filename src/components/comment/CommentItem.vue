@@ -89,7 +89,7 @@
 
           if (toUser) {
             this.placeholder = `@${toUser.nickname} `
-            this.reply.toUser = toUser
+            this.reply.toUid = toUser.id
           } else {
             this.placeholder = '你的评论...'
           }
@@ -106,7 +106,7 @@
         if (!that.reply.content) {
           return;
         }
-
+        console.log(that.reply, '我是reply')
         publishComment(that.reply).then(data => {
           that.$message({type: 'success', message: '评论成功', showClose: true})
           if(!that.comment.childrens){
@@ -124,13 +124,9 @@
       },
       getEmptyReply() {
         return {
-          article: {
-            id: this.articleId
-          },
-          parent: {
-            id: this.comment.id
-          },
-          toUser: '',
+          articleId: this.articleId,
+          parentId: this.comment.id,
+          toUid: '',
           content: ''
         }
       }

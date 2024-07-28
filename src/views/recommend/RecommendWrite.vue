@@ -47,11 +47,11 @@
             >
             </el-input>
           </el-form-item>
-          <el-form-item label="文章分类" prop="category">
+          <el-form-item label="公司分类" prop="category">
             <el-select
               v-model="articleForm.category"
               value-key="id"
-              placeholder="请选择文章分类"
+              placeholder="请选择所属公司"
             >
               <el-option
                 v-for="c in categorys"
@@ -62,7 +62,7 @@
             </el-select>
           </el-form-item>
   
-          <el-form-item label="文章标签" prop="tags">
+          <el-form-item label="内推技术栈" prop="tags">
             <el-checkbox-group v-model="articleForm.tags">
               <el-checkbox
                 v-for="t in tags"
@@ -89,7 +89,7 @@
   import MarkdownEditor from "@/components/markdown/MarkdownEditor";
   import { publishRecommend, getRecommendById } from "@/api/recommendApi/recommend";
   import { getAllIndustryDetail } from "@/api/recommendApi/industry";
-  import { getAllCompanyDetail } from "@/api/recommendApi/company";
+  import { getAllStackDetail } from "@/api/recommendApi/stack";
   
   export default {
     name: "BlogWrite",
@@ -314,9 +314,9 @@
             }
           });
   
-        getAllCompanyDetail()
+        getAllStackDetail()
           .then((data) => {
-            console.log(data, "getAllCompanyDetail获取到的数据");
+            console.log(data, "getAllStackDetail获取到的数据");
             that.tags = data.data;
           })
           .catch((error) => {

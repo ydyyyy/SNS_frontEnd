@@ -1,109 +1,86 @@
 import Mock from "mockjs";
 import { getNewRecommend } from "../../recommendApi/recommend";
 export default {
-  // 公司分类
-  getHotCompany: (config) => {
+  // 技术栈分类
+  getHotstack: (config) => {
     return {
       code: 0,
       data: [
         {
-          avatar: "/tag/vue.png",
-          id: 7,
-          tagname: "Vue",
-        },
-        {
-          avatar: "/tag/html.png",
-          id: 5,
-          tagname: "Html",
-        },
-        {
-          avatar: "/tag/css.png",
-          id: 8,
-          tagname: "Css",
-        },
-        {
-          avatar: "/tag/hibernate.svg",
-          id: 3,
-          tagname: "Hibernate",
-        },
-        {
-          avatar: "/tag/js.png",
-          id: 6,
-          tagname: "JavaScript",
-        },
-        {
-          avatar: "/tag/java.png",
+          avatar: "/category/front.png",
           id: 1,
-          tagname: "Java",
-        },
-      ],
-      msg: "成功(mock)",
-    };
-  },
-  getAllCompanyDetail: (config) => {
-    return {
-      code: 0,
-      data: [
-        {
-          articles: 0,
-          avatar: "/tag/java.png",
-          id: 1,
-          tagname: "Java",
+          tagname: "前端",
         },
         {
-          articles: 0,
-          avatar: "/tag/",
+          avatar: "/category/back.png",
           id: 2,
-          tagname: "Spring",
+          tagname: "后端",
         },
         {
-          articles: 2,
-          avatar: "/tag/hibernate.svg",
+          avatar: "/category/lift.jpg",
           id: 3,
-          tagname: "Hibernate",
+          tagname: "生活",
         },
         {
-          articles: 0,
-          avatar: "/tag/maven.png",
+          avatar: "/category/database.png",
           id: 4,
-          tagname: "Maven",
+          tagname: "数据库",
         },
         {
-          articles: 3,
-          avatar: "/tag/html.png",
+          avatar: "/category/language.png",
           id: 5,
-          tagname: "Html",
-        },
-        {
-          articles: 2,
-          avatar: "/tag/js.png",
-          id: 6,
-          tagname: "JavaScript",
-        },
-        {
-          articles: 4,
-          avatar: "/tag/vue.png",
-          id: 7,
-          tagname: "Vue",
-        },
-        {
-          articles: 3,
-          avatar: "/tag/css.png",
-          id: 8,
-          tagname: "Css",
-        },
+          tagname: "编程语言",
+        }
       ],
       msg: "成功(mock)",
     };
   },
-  getCompanyDetail: (config) => {
+  getAllstackDetail: (config) => {
+    return {
+      code: 0,
+      data: [
+        {
+          articles: 0,
+          avatar: "/category/front.png",
+          id: 1,
+          tagname: "前端",
+        },
+        {
+          articles: 0,
+          avatar: "/category/back.png",
+          id: 2,
+          tagname: "后端",
+        },
+        {
+          articles: 2,
+          avatar: "/category/lift.jpg",
+          id: 3,
+          tagname: "生活",
+        },
+        {
+          articles: 0,
+          avatar: "/category/database.png",
+          id: 4,
+          tagname: "数据库",
+        },
+        {
+          articles: 3,
+          avatar: "/category/language.png",
+          id: 5,
+          tagname: "编程语言",
+        }
+      ],
+      msg: "成功(mock)",
+    };
+  },
+  getstackDetail: (config) => {
     return {
       "code": 0,
       "data": {
-        "articles": 2,
-        "avatar": "/tag/js.png",
-        "id": 6,
-        "tagname": "JavaScript"
+        articles: 0,
+        avatar: "/category/front.png",
+        id: 1,
+        tagname: "前端",
       },
       "msg": "成功(mock)"
     }
@@ -115,38 +92,66 @@ export default {
       "data": [
         {
           "articles": 4,
-          "avatar": "/category/front.png",
-          "categoryname": "前端",
+          "avatar": "/company/baidu.jpeg",
+          "categoryname": "百度",
           "description": "",
           "id": 1
         },
         {
           "articles": 0,
-          "avatar": "/category/back.png",
-          "categoryname": "后端",
+          "avatar": "/company/tengxun.jpeg",
+          "categoryname": "腾讯",
           "description": "",
           "id": 2
         },
         {
           "articles": 3,
-          "avatar": "/category/lift.jpg",
-          "categoryname": "生活",
+          "avatar": "/company/jingdong.png",
+          "categoryname": "京东",
           "description": "",
           "id": 3
         },
         {
           "articles": 1,
-          "avatar": "/category/database.png",
-          "categoryname": "数据库",
+          "avatar": "/company/meituan.png",
+          "categoryname": "美团",
           "description": "",
           "id": 4
         },
         {
           "articles": 0,
-          "avatar": "/category/language.png",
-          "categoryname": "编程语言",
+          "avatar": "/company/Rxing.png",
+          "categoryname": "R星",
           "description": "",
           "id": 5
+        },
+        {
+          "articles": 0,
+          "avatar": "/company/weiruan.png",
+          "categoryname": "微软",
+          "description": "",
+          "id": 6
+        },
+        {
+          "articles": 0,
+          "avatar": "/company/xiaomi.jpeg",
+          "categoryname": "小米",
+          "description": "",
+          "id": 7
+        },
+        {
+          "articles": 0,
+          "avatar": "/company/zhongruan.png",
+          "categoryname": "中软",
+          "description": "",
+          "id": 8
+        },
+        {
+          "articles": 0,
+          "avatar": "/company/zijie.jpeg",
+          "categoryname": "字节",
+          "description": "",
+          "id": 8
         }
       ],
       "msg": "成功"
