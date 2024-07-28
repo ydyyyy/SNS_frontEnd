@@ -145,7 +145,7 @@
         },
         comments: [],
         comment: {
-          article: {},
+          articleId: '',
           content: ''
         }
       }
@@ -189,7 +189,7 @@
         if (!that.comment.content) {
           return;
         }
-        that.comment.article.id = that.article.id
+        that.comment.articleId = that.article.id
         console.log(that.comment, '我是评论数据')
         publishComment(that.comment).then(data => {
           console.log(data, '我是publishComment获取到的评论数据')
