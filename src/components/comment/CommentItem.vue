@@ -89,7 +89,10 @@
 
           if (toUser) {
             this.placeholder = `@${toUser.nickname} `
+            console.log(toUser.id, '我是toUser.id')
+            console.log(this.comment, '我是comment')
             this.reply.toUid = toUser.id
+            console.log(this.reply.toUid, '我是reply.toUid')
           } else {
             this.placeholder = '你的评论...'
           }
@@ -126,7 +129,7 @@
         return {
           articleId: this.articleId,
           parentId: this.comment.id,
-          toUid: '',
+          toUid: this.comment.author.id,
           content: ''
         }
       }

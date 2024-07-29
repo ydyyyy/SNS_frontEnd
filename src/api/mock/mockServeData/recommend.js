@@ -106,7 +106,7 @@ export default {
         },
         {
           "articles": 3,
-          "avatar": "/company/jingdong.png",
+          "avatar": "/company/jingdong.jpeg",
           "categoryname": "京东",
           "description": "",
           "id": 3
