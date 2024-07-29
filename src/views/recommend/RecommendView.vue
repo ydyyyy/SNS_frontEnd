@@ -151,7 +151,7 @@
           },
           comments: [],
           comment: {
-            article: {},
+            articleId: '',
             content: ''
           }
         }
@@ -181,7 +181,7 @@
         })
       },
         tagOrCategory(type, id) {
-          this.$router.push({path: `/recommend/${type}/${id}`})
+          this.$router.push({path: `/recommend/type/${type}/${id}`})
         },
         editArticle() {
           this.$router.push({path: `/recommend/write/${this.article.id}`})
@@ -205,7 +205,7 @@
           if (!that.comment.content) {
             return;
           }
-          that.comment.article.id = that.article.id
+          that.comment.articleId= that.article.id
           console.log(that.comment, '我是评论数据')
           publishCommentRec(that.comment).then(data => {
             console.log(data, '我是publishCommentRec获取到的评论数据')

@@ -7,7 +7,7 @@
 <script>
   import ArticleItem from '@/components/article/ArticleItem'
   import ScrollPage from '@/components/scrollpage'
-  import {getAuditArticles} from '@/api/article'
+  import {getArticles} from '@/api/article'
 
   export default {
     name: "ArticleScrollPage",
@@ -50,7 +50,7 @@
       }
     },
     created() {
-      this.getAuditArticles()
+      this.getArticles()
     },
     data() {
       return {
@@ -67,13 +67,13 @@
     },
     methods: {
       load() {
-        this.getAuditArticles()
+        this.getArticles()
       },
-      getAuditArticles() {
+      getArticles() {
         let that = this
         that.loading = true
 
-        getAuditArticles().then(data => {
+        getArticles(that.query, that.innerPage).then(data => {
           let newArticles = data.data
           if (newArticles && newArticles.length > 0) {
             that.innerPage.pageNumber += 1

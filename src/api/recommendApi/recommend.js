@@ -75,10 +75,3 @@ export function rejectRecommend(id) {
     method: "get",
   });
 }
-// 后加-----------------------------------------------
-export function getAuditRecommend() {
-  return request({
-    url: `/recommend/audit`,
-    method: "get",
-  });
-}

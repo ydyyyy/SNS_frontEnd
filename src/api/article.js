@@ -89,10 +89,3 @@ export function getArticleById(id) {
     method: "get",
   });
 }
-// 后加-----------------------------------------------
-export function getAuditArticles() {
-  return request({
-    url: `/articles/audit`,
-    method: "get",
-  });
-}
