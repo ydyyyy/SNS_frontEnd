@@ -271,7 +271,7 @@
                   type: "success",
                   showClose: true,
                 });
-                that.$router.push({ path: `/blog/view/${data.data.articleId}` });
+                that.$router.push({ path: `/recommend/view/${data.data.articleId}` });
               })
               .catch((error) => {
                 loading.close();

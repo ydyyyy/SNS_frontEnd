@@ -57,6 +57,10 @@ const router = new Router({
             requireLogin: true,
           },
         },
+        {
+          path: "/blog/audit",
+          component: () => import("@/views/blog/BlogAudit"),
+        },
         // 抓包模块
         {
           path: "project",
@@ -98,6 +102,10 @@ const router = new Router({
           meta: {
             requireLogin: true,
           },
+        },
+        {
+          path: "/recommend/audit",
+          component: () => import("@/views/recommend/RecommendAudit"),
         },
         // 个人中心
         {

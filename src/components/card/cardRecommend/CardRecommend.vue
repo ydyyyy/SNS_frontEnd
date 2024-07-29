@@ -14,7 +14,7 @@
   
   <script>
     export default {
-      name: 'CardArticle',
+      name: 'CardRecommend',
       props: {
         cardHeader: {
           type: String,

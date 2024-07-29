@@ -106,6 +106,7 @@ export default {
           { index: "/blog/log", label: "日志" },
           { index: "/blog/messageBoard", label: "留言板" },
           { index: "/blog/write", label: "写文章" },
+          { index: "/blog/audit", label: "审核文章" },
         ],
         "/recommend": [
           { index: "/recommend", label: "内推首页" },
@@ -113,6 +114,7 @@ export default {
           { index: "/recommend/tag/all", label: "技术栈分类" },
           { index: "/recommend/archives", label: "内推归档" },
           { index: "/recommend/write", label: "发布内推" },
+          { index: "/recommend/audit", label: "审核内推" },
         ],
         // 添加更多导航项及其对应的菜单数组
         // ...
@@ -120,8 +122,11 @@ export default {
     };
   },
   computed: {
+    filteredMenuItems() {
+      return this.filterMenuItems(this.menuItems);
+    },
     currentMenuItems() {
-      return this.menuItems[this.currentActiveIndex];
+      return this.filteredMenuItems[this.currentActiveIndex];
     },
     user() {
       let login = this.$store.state.account.length != 0;
@@ -133,6 +138,22 @@ export default {
     },
   },
   methods: {
+    filterMenuItems(menuItems) {
+      const filteredItems = {};
+      const auditRegex = /\/.*\/audit/; // 匹配任意路径中的 /audit
+      for (const key in menuItems) {
+        if (Object.hasOwn(menuItems, key)) {
+          filteredItems[key] = menuItems[key].filter(item => {
+            // 如果status为0则不包含审核文章
+            if (this.$store.state.admin_status === 0 && auditRegex.test(item.index)) {
+              return false;
+            }
+            return true;
+          });
+        }
+      }
+      return filteredItems;
+    },
     logout() {
       let that = this;
       this.$store
