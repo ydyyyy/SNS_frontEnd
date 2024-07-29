@@ -2,8 +2,8 @@
   <el-card class="card_info">
     <h1 class="me-author-name">ydy</h1>
     <div class="me-author-description">
-      <span><i class="el-icon-location-outline"></i> &nbsp;辽宁&大连</span>
-      <span><i class="me-icon-job"></i> &nbsp;Java开发工程师</span>
+      <span><i class="el-icon-location-outline"></i> &nbsp;{{this.formData.address}}</span>
+      <span><i class="me-icon-job"></i> &nbsp;{{this.formData.position}}</span>
     </div>
     <div class="wrapper">
       <div class="social">
@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import store from "@/store";
 export default {
   name: "CardMe",
   data() {
@@ -44,6 +45,16 @@ export default {
         message:
           '<a target="_blank" href="https://github.com/shimh-develop">https://github.com/shimh-develop</a>',
       },
+      formData: {
+        nickname: "",
+        sex: "",
+        birth: "",
+        email: "",
+        phone: "",
+        address: "哈尔滨",
+        position: "前端开发工程师",
+        avatar: "", // 用户头像 URL
+      },
     };
   },
   methods: {
@@ -55,6 +66,24 @@ export default {
         message: "<strong>" + tool.message + "</strong>",
       });
     },
+    getInfo() {
+      store
+          .dispatch("getUserInfo")
+          .then((data) => {
+            this.assignFormData(data.data);
+          })
+    },
+    assignFormData(data) {
+      for (let key in this.formData) {
+        if (data.hasOwnProperty(key)) {
+          this.formData[key] = data[key];
+        }
+      }
+      console.log("Updated formData:", this.formData);
+    },
+  },
+  mounted() {
+    this.getInfo();
   },
 };
 </script>
