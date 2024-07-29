@@ -171,12 +171,12 @@
     },
     methods: {
       agree() {
-        agreeArticle(that.$route.params.id).then(data => {
+        agreeArticle(this.$route.params.id).then(data => {
           this.$message({type: 'success', message: '批准成功', showClose: true})
         })
       },
       reject() {
-        rejectArticle(that.$route.params.id).then(data => {
+        rejectArticle(this.$route.params.id).then(data => {
           this.$message({type: 'success', message: '拒绝成功', showClose: true})
         })
       },

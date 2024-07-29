@@ -11,7 +11,13 @@
         <el-main>
   
           <div class="me-view-card">
-            <h1 class="me-view-title">{{article.title}}</h1>
+            <div class="me-view-ydy">
+          <h1 class="me-view-title">{{article.title}}</h1>
+          <div class="me-view-audit" v-if="this.$store.state.admin_status === 1"> 
+            <el-button type="success" @click="agree">批准</el-button>
+            <el-button type="danger" @click="reject">拒绝</el-button>
+          </div>
+          </div>
             <div class="me-view-author">
               <a class="">
                 <img class="me-view-picture" :src="article.author.avatar"></img>
@@ -111,7 +117,7 @@
   <script>
     import MarkdownEditor from '@/components/markdown/MarkdownEditor'
     import CommentItemRec from '@/components/comment/CommentItemRec'
-    import {viewRecommend} from '@/api/recommendApi/recommend'
+    import {viewRecommend,agreeRecommend,rejectRecommend} from '@/api/recommendApi/recommend'
     import {getCommentsByRecommend, publishCommentRec} from '@/api/recommendApi/recComment'
   
     import default_avatar from '@/assets/img/default_avatar.png'
@@ -164,6 +170,16 @@
         }
       },
       methods: {
+        agree() {
+        agreeRecommend(this.$route.params.id).then(data => {
+          this.$message({type: 'success', message: '批准成功', showClose: true})
+        })
+      },
+      reject() {
+        rejectRecommend(this.$route.params.id).then(data => {
+          this.$message({type: 'success', message: '拒绝成功', showClose: true})
+        })
+      },
         tagOrCategory(type, id) {
           this.$router.push({path: `/recommend/${type}/${id}`})
         },
@@ -236,6 +252,12 @@
   </script>
   
   <style>
+  .me-view-ydy {
+    display: flex;
+    align-items: center; /* 垂直居中对齐 */
+    justify-content: space-between; /* 在两边对齐 */
+    margin-bottom: 20px; /* 给底部添加一些间距 */
+  }
     .me-view-body {
       margin: 100px auto 140px;
     }

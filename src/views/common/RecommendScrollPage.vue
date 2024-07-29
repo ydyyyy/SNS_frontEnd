@@ -7,7 +7,7 @@
   <script>
     import RecommendItem from '@/components/recommend/RecommendItem'
     import ScrollPage from '@/components/scrollpage'
-    import {getRecommend} from '@/api/recommendApi/recommend'
+    import {getRecommendAudit} from '@/api/recommendApi/recommend'
   
     export default {
       name: "RecommendScrollPage",
@@ -50,7 +50,7 @@
         }
       },
       created() {
-        this.getRecommend()
+        this.getRecommendAudit()
       },
       data() {
         return {
@@ -67,13 +67,13 @@
       },
       methods: {
         load() {
-          this.getRecommend()
+          this.getRecommendAudit()
         },
-        getRecommend() {
+        getRecommendAudit() {
           let that = this
           that.loading = true
   
-          getRecommend(that.query, that.innerPage).then(data => {
+          getRecommendAudit().then(data => {
             let newArticles = data.data
             if (newArticles && newArticles.length > 0) {
               that.innerPage.pageNumber += 1

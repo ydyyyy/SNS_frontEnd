@@ -17,7 +17,7 @@
     import CardArticle from '@/components/card/CardArticle'
     import ArticleScrollPage from '@/views/common/ArticleScrollPage'
   
-    import {getArticles} from '@/api/article'
+    import {getAuditArticles} from '@/api/article'
   
     export default {
       name: 'Blog',

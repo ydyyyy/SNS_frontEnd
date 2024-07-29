@@ -61,3 +61,24 @@ export function getRecommendById(id) {
     method: 'get'
   })
 }
+// 后加-----------------------------------------------
+export function agreeRecommend(id) {
+  return request({
+    url: `/recommend/agree/${id}`,
+    method: "get",
+  });
+}
+// 后加-----------------------------------------------
+export function rejectRecommend(id) {
+  return request({
+    url: `/recommend/reject/${id}`,
+    method: "get",
+  });
+}
+// 后加-----------------------------------------------
+export function getAuditRecommend() {
+  return request({
+    url: `/recommend/audit`,
+    method: "get",
+  });
+}

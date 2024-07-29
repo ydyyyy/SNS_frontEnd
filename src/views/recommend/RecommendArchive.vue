@@ -73,7 +73,7 @@
         // this.currentArchive = `${year}年${month}月`
         // this.article.query.year = year
         // this.article.query.month = month
-        this.$router.push({ path: `/blog/archives/${year}/${month}` });
+        this.$router.push({ path: `/recommend/archives/${year}/${month}` });
       },
       listRecommendArchives() {
         listRecommendArchives()
