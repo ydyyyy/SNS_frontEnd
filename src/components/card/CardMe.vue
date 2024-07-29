@@ -9,19 +9,19 @@
       <div class="social">
         <span>Share your profile</span>
         <div class="social-links">
-          <a @click="showTool(qq)"
+          <a @click="showTool(wechat)"
             ><i class="fa fa-weixin" aria-hidden="true"></i
           ></a>
           <a @click="showTool(qq)"
             ><i class="fa fa-qq" aria-hidden="true"></i
           ></a>
-          <a @click="showTool(qq)"
+          <a @click="showTool(qqEnvelope)"
             ><i class="fa fa-envelope" aria-hidden="true"></i
           ></a>
           <a @click="showTool(github)"
             ><i class="fa fa-github" aria-hidden="true"></i
           ></a>
-          <a @click="showTool(qq)"
+          <a @click="showTool(facebook)"
             ><i class="fa fa-facebook" aria-hidden="true"></i
           ></a>
         </div>
@@ -36,6 +36,9 @@ export default {
   data() {
     return {
       qq: { title: "QQ", message: "919431514" },
+      wechat: { title: "Wechat", message: "2872186464" },
+      qqEnvelope: { title: "QQ Mail", message: "919431514@qq.com" },
+      facebook: { title: "facebook", message: "kk.tt" },
       github: {
         title: "github",
         message:

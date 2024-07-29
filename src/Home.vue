@@ -18,7 +18,7 @@ export default {
   name: "Home",
   data() {
     return {
-      activeIndex: '/', // 初始化activeIndex为当前路由路径
+      activeIndex: '/blog', // 初始化activeIndex为当前路由路径
       footerShow: true,
     };
   },

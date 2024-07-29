@@ -25,6 +25,14 @@ export function getUserInfo() {
     method: 'get'
   })
 }
+//更新用户信息 -----------------------------------------------------
+export function updateUserInfo(formData) {
+  return request({
+    url: '/users/updateUser',
+    method: 'post',
+    formData
+  })
+}
 //已完成
 export function register(account, nickname, password) {
   const data = {

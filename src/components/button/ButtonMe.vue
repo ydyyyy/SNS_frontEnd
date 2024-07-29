@@ -1,16 +1,55 @@
 <template>
   <div>
-    <button class="button" type="primary" @click="showModal = true">View&Edit</button>
+    <button class="button" type="primary" @click="showModal = true">
+      View&Edit
+    </button>
     <el-dialog :visible.sync="showModal" title="编辑个人信息">
-      <el-form :model="formData" label-width="80px">
-        <el-form-item label="姓名">
-          <el-input v-model="formData.name"></el-input>
+      <el-form :model="formData" label-width="80px" :rules="rules" :inline="true" ref="formData">
+        <el-form-item label="昵称" prop="nickname">
+          <el-input placeholder="请输入昵称" v-model="formData.nickname"></el-input>
         </el-form-item>
-        <el-form-item label="邮箱">
-          <el-input v-model="formData.email"></el-input>
+        <el-form-item label="性别" prop="sex">
+          <el-select v-model="formData.sex" placeholder="请选择">
+            <el-option label="男" value="1"></el-option>
+            <el-option label="女" value="0"></el-option>
+          </el-select>
         </el-form-item>
-        <el-form-item label="电话">
-          <el-input v-model="formData.phone"></el-input>
+        <el-form-item label="出生日期" prop="birth">
+          <el-date-picker
+            v-model="formData.birth"
+            type="date"
+            placeholder="选择日期"
+            value-format="yyyy-MM-DD"
+          >
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="邮箱" prop="email">
+          <el-input placeholder="请输入Email" v-model="formData.email"></el-input>
+        </el-form-item>
+        <el-form-item label="电话" prop="phone">
+          <el-input placeholder="请输入电话" v-model="formData.phone"></el-input>
+        </el-form-item>
+        <el-form-item label="地址" prop="address">
+          <el-input placeholder="请输入地址" v-model="formData.address"></el-input>
+        </el-form-item>
+        <el-form-item label="职业" prop="position">
+          <el-input placeholder="请输入职业" v-model="formData.position"></el-input>
+        </el-form-item>
+        <el-form-item label="用户头像" prop="avatar">
+          <div v-if="formData.avatar" class="avatar-preview">
+            <img :src="formData.avatar" alt="用户头像" class="avatar-image" />
+            <el-button type="text" @click="editAvatar = true">修改头像</el-button>
+          </div>
+          <el-upload
+            v-if="editAvatar"
+            action="/upload"
+            list-type="picture-card"
+            :on-success="handleSuccess"
+            :file-list="fileList"
+            accept="image/*"
+          >
+            <el-button type="primary">点击上传</el-button>
+          </el-upload>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -22,37 +61,92 @@
 </template>
 
 <script>
+import store from "@/store";
 export default {
   name: "Button",
   data() {
     return {
       showModal: false,
+      editAvatar: false,
       formData: {
-        name: '',
-        email: '',
-        phone: ''
-      }
+        nickname: "",
+        sex: "",
+        birth: "",
+        email: "",
+        phone: "",
+        address: "",
+        position: "",
+        avatar: "", // 用户头像 URL
+      },
+      fileList: [],
+      rules: {
+        nickname: [{ required: true, message: "请输入昵称" }],
+        email: [{ required: true, message: "请输入邮箱" }],
+        phone: [{ required: true, message: "请输入电话" }],
+        address: [{ required: true, message: "请输入地址" }],
+        sex: [{ required: true, message: "请选择性别" }],
+        birth: [{ required: true, message: "请选择出生日期" }],
+        position: [{ required: true, message: "请输入职业" }],
+        avatar: [{ required: true, message: "请上传头像" }],
+      },
     };
   },
   methods: {
     submitForm() {
-      // 在此处处理表单提交逻辑，例如发送请求或更新状态
-      console.log('提交的表单数据:', this.formData);
-      this.showModal = false; // 提交后关闭模态框
+      this.$refs.formData.validate((valid) => {
+        if (valid) {
+          console.log("Form data:", this.formData);
+          后续对表单数据的处理
+          updateInfo(this.formData).then(() => {
+            // 更新表单的数据
+            this.updateForm();
+          });
+          关闭弹窗
+          this.showModal = false;
+        }
+      });
+    },
+    updateForm() {
+      this.getInfo();
+    },
+    getInfo() {
+      store
+          .dispatch("getUserInfo")
+          .then((data) => {
+            this.assignFormData(data.data);
+          })
+    },
+    assignFormData(data) {
+      for (let key in this.formData) {
+        if (data.hasOwnProperty(key)) {
+          this.formData[key] = data[key];
+        }
+      }
+      console.log("Updated formData:", this.formData);
+    },
+    handleSuccess(response, file, fileList) {
+      this.fileList = fileList;
+      // 更新头像 URL
+      this.formData.avatar = URL.createObjectURL(file.raw);
+      console.log("Upload success:", response, file, fileList);
     }
-  }
+  },
+  mounted() {
+    this.getInfo();
+  },
 };
 </script>
 
 <style scoped>
-html, body {
+html,
+body {
   height: 100%;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(to left, #606c88 , #3f4c6b);
-  font-family: 'Oswald', sans-serif;
+  background: linear-gradient(to left, #606c88, #3f4c6b);
+  font-family: "Oswald", sans-serif;
 }
 
 .button {
@@ -90,15 +184,34 @@ html, body {
   margin-left: -20px !important;
   margin-top: -120%;
   opacity: 0;
-  transition: all 0.8s
+  transition: all 0.8s;
 }
 
 .button:active:after {
   padding: 0;
   margin: 0;
   opacity: 1;
-  transition: 0s
+  transition: 0s;
 }
 
-.button:focus { outline:0; }
+.button:focus {
+  outline: 0;
+}
+
+.avatar-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.avatar-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  vertical-align: middle;
+  background-color: #5fb878;
+}
 </style>

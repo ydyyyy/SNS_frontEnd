@@ -80,7 +80,7 @@
   
                 <el-row :gutter="20">
                   <el-col :span="2" :offset="22">
-                    <el-button type="text" @click="publishComment()">评论</el-button>
+                    <el-button type="text" @click="publishCommentRec()">评论</el-button>
                   </el-col>
                 </el-row>
               </div>
@@ -89,7 +89,7 @@
                 <span>{{article.commentCounts}} 条评论</span>
               </div>
   
-              <commment-item
+              <comment-item-rec
                 v-for="(c,index) in comments"
                 :comment="c"
                 :articleId="article.id"
@@ -97,7 +97,7 @@
                 :rootCommentCounts="comments.length"
                 @commentCountsIncrement="commentCountsIncrement"
                 :key="c.id">
-              </commment-item>
+              </comment-item-rec>
   
             </div>
   
@@ -110,14 +110,14 @@
   
   <script>
     import MarkdownEditor from '@/components/markdown/MarkdownEditor'
-    import CommmentItem from '@/components/comment/CommentItem'
+    import CommentItemRec from '@/components/comment/CommentItemRec'
     import {viewRecommend} from '@/api/recommendApi/recommend'
-    import {getCommentsByRecommend, publishComment} from '@/api/recommendApi/recComment'
+    import {getCommentsByRecommend, publishCommentRec} from '@/api/recommendApi/recComment'
   
     import default_avatar from '@/assets/img/default_avatar.png'
   
     export default {
-      name: 'BlogView',
+      name: 'RecommendView',
       created() {
         this.getArticle()
       },
@@ -184,15 +184,15 @@
             }
           })
         },
-        publishComment() {
+        publishCommentRec() {
           let that = this
           if (!that.comment.content) {
             return;
           }
           that.comment.article.id = that.article.id
           console.log(that.comment, '我是评论数据')
-          publishComment(that.comment).then(data => {
-            console.log(data, '我是publishComment获取到的评论数据')
+          publishCommentRec(that.comment).then(data => {
+            console.log(data, '我是publishCommentRec获取到的评论数据')
             that.$message({type: 'success', message: '评论成功', showClose: true})
             that.comments.unshift(data.data)
             that.commentCountsIncrement()
@@ -206,8 +206,9 @@
         getCommentsByRecommend() {
           let that = this
           getCommentsByRecommend(that.article.id).then(data => {
-            console.log(data, '我是getCommentsByRecommend获取到的评论数据')
+            console.log(data, '我是getCommentsByRecommend获取到的评论数据666')
             that.comments = data.data
+            console.log(that.comments, '我是comments外面的')
           }).catch(error => {
             if (error !== 'error') {
               that.$message({type: 'error', message: '评论加载失败', showClose: true})
@@ -220,7 +221,7 @@
       },
       components: {
         'markdown-editor': MarkdownEditor,
-        CommmentItem
+        CommentItemRec
       },
       //组件内的守卫 调整body的背景色
       beforeRouteEnter(to, from, next) {

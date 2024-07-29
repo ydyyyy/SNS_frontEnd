@@ -8,9 +8,9 @@ export function getCommentsByRecommend(id) {
   });
 }
 // 已写好接口文档
-export function publishComment(comment) {
+export function publishCommentRec(comment) {
   return request({
-    url: "/comments/create/change",
+    url: "/comments/recommend/create/change",
     method: "post",
     data: comment,
   });

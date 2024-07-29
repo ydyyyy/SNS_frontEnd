@@ -121,7 +121,7 @@ export default {
   },
   computed: {
     currentMenuItems() {
-      return this.menuItems[this.currentActiveIndex] || [];
+      return this.menuItems[this.currentActiveIndex];
     },
     user() {
       let login = this.$store.state.account.length != 0;
