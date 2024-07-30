@@ -1,6 +1,6 @@
 <template>
   <el-card class="card_info">
-    <h1 class="me-author-name">ydy</h1>
+    <h1 class="me-author-name">{{this.formData.nickname}}</h1>
     <div class="me-author-description">
       <span><i class="el-icon-location-outline"></i> &nbsp;{{this.formData.address}}</span>
       <span><i class="me-icon-job"></i> &nbsp;{{this.formData.position}}</span>

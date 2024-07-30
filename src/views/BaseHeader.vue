@@ -145,7 +145,7 @@ export default {
         if (Object.hasOwn(menuItems, key)) {
           filteredItems[key] = menuItems[key].filter(item => {
             // 如果status为0则不包含审核文章
-            if (this.$store.state.admin_status === 0 && auditRegex.test(item.index)) {
+            if (this.$store.state.adminStatus === 0 && auditRegex.test(item.index)) {
               return false;
             }
             return true;

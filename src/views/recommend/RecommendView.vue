@@ -13,7 +13,7 @@
           <div class="me-view-card">
             <div class="me-view-ydy">
           <h1 class="me-view-title">{{article.title}}</h1>
-          <div class="me-view-audit" v-if="this.$store.state.admin_status === 1"> 
+          <div class="me-view-audit" v-if="this.$store.state.adminStatus === 1"> 
             <el-button type="success" @click="agree">批准</el-button>
             <el-button type="danger" @click="reject">拒绝</el-button>
           </div>

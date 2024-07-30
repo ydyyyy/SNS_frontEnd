@@ -12,7 +12,7 @@ export default new Vuex.Store({
     name: '',
     avatar: '',
     token: getToken(),
-    admin_status: 1 //0为普通用户，1为管理员
+    adminStatus: 1 //0为普通用户，1为管理员
   },
   mutations: {
     SET_TOKEN: (state, token) => {
@@ -30,8 +30,8 @@ export default new Vuex.Store({
     SET_ID: (state, id) => {
       state.id = id
     },
-    SET_ADMIN_STATUS: (state, admin_status) => {
-      state.admin_status = admin_status
+    SET_ADMIN_STATUS: (state, adminStatus) => {
+      state.adminStatus = adminStatus
     }
   },
   actions: {
@@ -54,7 +54,7 @@ export default new Vuex.Store({
         getUserInfo().then(data => {
           console.log(data,"我是获取用户信息")
           if (data.data) {
-            //commit('SET_ADMIN_STATUS', data.data.admin_status)
+            //commit('SET_ADMIN_STATUS', data.data.adminStatus)
             commit('SET_ACCOUNT', data.data.account)
             commit('SET_NAME', data.data.nickname)
             commit('SET_AVATAR', data.data.avatar)
@@ -83,6 +83,7 @@ export default new Vuex.Store({
           commit('SET_NAME', '')
           commit('SET_AVATAR', '')
           commit('SET_ID', '')
+          commit('SET_ADMIN_STATUS', 0)
           removeToken()
           resolve()
 
@@ -99,6 +100,7 @@ export default new Vuex.Store({
         commit('SET_NAME', '')
         commit('SET_AVATAR', '')
         commit('SET_ID', '')
+        commit('SET_ADMIN_STATUS', 0)
         removeToken()
         resolve()
       }).catch(error => {

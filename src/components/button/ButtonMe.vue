@@ -19,7 +19,6 @@
             v-model="formData.birth"
             type="date"
             placeholder="选择日期"
-            value-format="yyyy-MM-DD"
           >
           </el-date-picker>
         </el-form-item>
@@ -62,6 +61,7 @@
 
 <script>
 import store from "@/store";
+import { updateUserInfo } from "@/api/login";
 export default {
   name: "Button",
   data() {
@@ -97,7 +97,7 @@ export default {
         if (valid) {
           console.log("Form data:", this.formData);
           后续对表单数据的处理
-          updateInfo(this.formData).then(() => {
+          updateUserInfo(this.formData).then(() => {
             // 更新表单的数据
             this.updateForm();
           });
@@ -128,7 +128,7 @@ export default {
       this.fileList = fileList;
       // 更新头像 URL
       this.formData.avatar = URL.createObjectURL(file.raw);
-      console.log("Upload success:", response, file, fileList);
+      console.log("Upload success:", response, file, fileList,this.formData.avatar);
     }
   },
   mounted() {
