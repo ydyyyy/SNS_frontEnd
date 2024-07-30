@@ -122,12 +122,12 @@ export default {
       this.$refs.formData.validate((valid) => {
         if (valid) {
           console.log("Form data:", this.formData);
-          后续对表单数据的处理;
+          //后续对表单数据的处理;
           updateUserInfo(this.formData).then(() => {
             // 更新表单的数据
             this.updateForm();
           });
-          关闭弹窗;
+          //关闭弹窗;
           this.showModal = false;
         }
       });
