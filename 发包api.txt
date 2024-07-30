@@ -1,0 +1,56 @@
+import request from '@/request'
+
+
+export function getProjects(query, page) {
+    return request({
+      url: '/projects',
+      method: 'get',
+      params: {
+        pageNumber: page.pageNumber,
+        pageSize: page.pageSize,
+        name: page.name,
+        sort: page.sort,
+        year: query.year,
+        month: query.month,
+        tagId: query.tagId,
+        categoryId: query.categoryId
+      }
+    })
+  }
+  export function getProjectById(id) {
+    return request({
+      url: `/projects/${id}`,
+      method: 'get'
+    })
+  }
+  export function getProjectByuser_id(user_id) {
+    return request({
+      url: `/projects/user/${user_id}`,
+      method: 'get'
+    })
+  }
+  export function getProjectByapplicant_id(applicant_id){
+    return request({
+        url: `/projects/applicant/${applicant_id}`,
+        method: 'get'
+      })
+  }
+  export function viewProject(id){
+    return request({
+        url: `/projects/view/${id}`,
+        method: 'get'
+      })
+  }
+  export function getProjectsByCategory(id){
+    return request({
+        url: `/projects/Category/${id}`,
+        method: 'get'
+      })
+  }
+  export function publishProject(project) {
+    return request({
+      url: '/projects/publish',
+      method: 'post',
+      data: project
+    })
+  }

@@ -1,9 +1,9 @@
 <template>
   <el-footer class="me-area">
     <div class="me-footer">
-      <p>
+      <p>Designed by
         <strong>
-          <router-link to="/" class="me-login-design-color">SNS 社交网络平台系统</router-link>
+          <router-link to="/" class="me-login-design-color">ForFun</router-link>
         </strong>
       </p>
     </div>

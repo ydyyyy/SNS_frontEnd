@@ -102,13 +102,22 @@ export default {
           { index: "/blog/archives", label: "文章归档" },
           { index: "/blog/log", label: "日志" },
           { index: "/blog/messageBoard", label: "留言板" },
-          { index: "/blog/write", label: "写文章" },
+          { index: "/blogwrite", label: "写文章" },
         ],
         "/project": [
           { index: "/project", label: "项目首页" },
           { index: "/project/create", label: "创建项目" },
           { index: "/project/asklist", label: "我申请的项目" },
           { index: "/project/releaselist", label: "我发布的项目" },
+        ],
+        "/activity": [
+          { index: "/activity", label: "首页" },
+          { index: "/activity/category/all", label: "活动分类" },
+          { index: "/activity/tag/all", label: "标签" },
+          { index: "/activity/archives", label: "历史活动" },
+          { index: "/activity/myActivity", label: "我参加过的活动" },
+          // { index: "/activity/messageBoard", label: "留言板" },
+          { index: "/activitywrite", label: "发布活动" },
         ],
         // 添加更多导航项及其对应的菜单数组
         // ...

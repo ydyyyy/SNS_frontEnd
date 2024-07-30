@@ -49,7 +49,7 @@ const router = new Router({
           component: () => import("@/views/blog/BlogCategoryTag"),
         },
         {
-          path: "blog/write/:id?",
+          path: "blogwrite/:id?",
           component: () => import("@/views/blog/BlogWrite"),
           meta: {
             requireLogin: true,
@@ -94,6 +94,40 @@ const router = new Router({
           path: "activity",
           name: "Activity",
           component: () => import("@/views/activity/Activity"),
+        },
+        {
+          path: "activity/myActivity",
+          component: () => import("@/views/activity/MyActivity"),
+        },
+        {
+          path: "activity/view/:id",
+          component: () => import("@/views/activity/ActivityView"),
+        },
+        {
+          path: "activity/:type/all",
+          component: () => import("@/views/activity/ActivityAllCategoryTag"),
+        },
+        {
+          path: "activity/:type/:id",
+          component: () => import("@/views/activity/ActivityCategoryTag"),
+        },
+        {
+          path: "activity/archives/:year?/:month?",
+          component: () => import("@/views/activity/ActivityArchive"),
+        },
+        {
+          path: "activitywrite/:id?",
+          component: () => import("@/views/activity/ActivityWrite"),
+          meta: {
+            requireLogin: true,
+          },
+        },
+        {
+          path: "activity/myActivity",
+          component: () => import("@/views/activity/MyActivity"),
+          meta: {
+            requireLogin: true,
+          },
         },
         // 内推模块
         {
