@@ -41,7 +41,7 @@
           </div>
           <el-upload
             v-if="editAvatar"
-            action="/upload"
+            action="http://localhost:8888/users/updateUser"
             list-type="picture-card"
             :on-success="handleSuccess"
             :file-list="fileList"
