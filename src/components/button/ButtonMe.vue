@@ -4,9 +4,18 @@
       View&Edit
     </button>
     <el-dialog :visible.sync="showModal" title="编辑个人信息">
-      <el-form :model="formData" label-width="80px" :rules="rules" :inline="true" ref="formData">
+      <el-form
+        :model="formData"
+        label-width="80px"
+        :rules="rules"
+        :inline="true"
+        ref="formData"
+      >
         <el-form-item label="昵称" prop="nickname">
-          <el-input placeholder="请输入昵称" v-model="formData.nickname"></el-input>
+          <el-input
+            placeholder="请输入昵称"
+            v-model="formData.nickname"
+          ></el-input>
         </el-form-item>
         <el-form-item label="性别" prop="sex">
           <el-select v-model="formData.sex" placeholder="请选择">
@@ -23,21 +32,35 @@
           </el-date-picker>
         </el-form-item>
         <el-form-item label="邮箱" prop="email">
-          <el-input placeholder="请输入Email" v-model="formData.email"></el-input>
+          <el-input
+            placeholder="请输入Email"
+            v-model="formData.email"
+          ></el-input>
         </el-form-item>
         <el-form-item label="电话" prop="phone">
-          <el-input placeholder="请输入电话" v-model="formData.phone"></el-input>
+          <el-input
+            placeholder="请输入电话"
+            v-model="formData.phone"
+          ></el-input>
         </el-form-item>
         <el-form-item label="地址" prop="address">
-          <el-input placeholder="请输入地址" v-model="formData.address"></el-input>
+          <el-input
+            placeholder="请输入地址"
+            v-model="formData.address"
+          ></el-input>
         </el-form-item>
         <el-form-item label="职业" prop="position">
-          <el-input placeholder="请输入职业" v-model="formData.position"></el-input>
+          <el-input
+            placeholder="请输入职业"
+            v-model="formData.position"
+          ></el-input>
         </el-form-item>
         <el-form-item label="用户头像" prop="avatar">
           <div v-if="formData.avatar" class="avatar-preview">
             <img :src="formData.avatar" alt="用户头像" class="avatar-image" />
-            <el-button type="text" @click="editAvatar = true">修改头像</el-button>
+            <el-button type="text" @click="editAvatar = true"
+              >修改头像</el-button
+            >
           </div>
           <el-upload
             v-if="editAvatar"
@@ -45,6 +68,7 @@
             list-type="picture-card"
             :on-success="handleSuccess"
             :file-list="fileList"
+            :before-upload="beforeUpload"
             accept="image/*"
           >
             <el-button type="primary">点击上传</el-button>
@@ -61,7 +85,9 @@
 
 <script>
 import store from "@/store";
+import axios from "axios";
 import { updateUserInfo } from "@/api/login";
+import { uploadAvatar } from "@/api/upload";
 export default {
   name: "Button",
   data() {
@@ -96,12 +122,12 @@ export default {
       this.$refs.formData.validate((valid) => {
         if (valid) {
           console.log("Form data:", this.formData);
-          后续对表单数据的处理
+          后续对表单数据的处理;
           updateUserInfo(this.formData).then(() => {
             // 更新表单的数据
             this.updateForm();
           });
-          关闭弹窗
+          关闭弹窗;
           this.showModal = false;
         }
       });
@@ -110,11 +136,9 @@ export default {
       this.getInfo();
     },
     getInfo() {
-      store
-          .dispatch("getUserInfo")
-          .then((data) => {
-            this.assignFormData(data.data);
-          })
+      store.dispatch("getUserInfo").then((data) => {
+        this.assignFormData(data.data);
+      });
     },
     assignFormData(data) {
       for (let key in this.formData) {
@@ -125,11 +149,24 @@ export default {
       console.log("Updated formData:", this.formData);
     },
     handleSuccess(response, file, fileList) {
-      this.fileList = fileList;
-      // 更新头像 URL
-      this.formData.avatar = URL.createObjectURL(file.raw);
-      console.log("Upload success:", response, file, fileList,this.formData.avatar);
-    }
+      this.fileList = fileList; // 更新头像 URL
+      this.formData.avatar = response;
+      console.log("Upload success:", response, file, fileList, this.formData);
+    },
+    beforeUpload(file) {
+      // 使用 FormData 来封装文件和其他数据
+      const formData = new FormData();
+      formData.append("file", file); // 发送 POST 请求到服务器
+      uploadAvatar(formData)
+        .then((response) => {
+          this.handleSuccess(response.data, file, this.fileList);
+        })
+        .catch((error) => {
+          console.error("上传失败", error);
+        }); // 阻止 el-upload 组件的默认行为
+
+      return false;
+    },
   },
   mounted() {
     this.getInfo();
