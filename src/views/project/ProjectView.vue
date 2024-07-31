@@ -4,14 +4,14 @@
       <el-container class="me-view-container">
         <el-main>
           <div class="me-write-btn" style="margin-right: 10px;">
-            <el-button type="success" round @click="publishShow">申请</el-button>
+            <el-button type="success" v-if="project.uid != user.id" round @click="publishShow">申请</el-button>
           </div>
 
           <div class="me-view-card">
             <h1 class="me-view-title">{{ project.title }}</h1>
             <div class="me-view-author">
               <a class="">
-                <img class="me-view-picture" :src="project.author.avatar"></img>
+                <img class="me-view-picture" :src="avatar"></img>
               </a>
               <div class="me-view-info">
                 <span>{{ project.nickname }}</span>
@@ -19,9 +19,10 @@
                   <span>{{ project.createDate | format }}</span>
                 </div>
               </div>
+
               <!-- 如果是作者 -->
-              <el-button v-if="this.project.author.id == this.$store.state.id" @click="editProject()"
-                style="position: absolute;left: 60%;" size="mini" round icon="el-icon-edit">编辑</el-button>
+              <el-button v-if="project.uid == user.id" @click="editProject()" style="position: absolute;left: 60%;"
+                size="mini" round icon="el-icon-edit">编辑</el-button>
             </div>
 
             <div>
@@ -29,26 +30,71 @@
             </div>
 
             <div class="me-view-tag">
+              需求详情：
+              {{ project.info }}
+            </div>
+
+            <div class="me-view-tag">
               任务分类：
-              <el-button @click="Category(project.category)" size="mini" type="primary" round plain>{{
-                project.category }}</el-button>
+              <el-button size="mini" type="primary" round plain v-if="this.project.category == 1">Java</el-button>
+              <el-button size="mini" type="primary" round plain v-if="this.project.category == 2">Python</el-button>
+            </div>
+            <div class="me-view-tag">
+              截止日期：
+              {{ project.deadline }}
+            </div>
+            <div class="me-view-tag">
+              项目状态：
+              <el-button size="mini" type="primary" round plain v-if="this.project.applied == 0">我的项目</el-button>
+              <el-button size="mini" type="primary" round plain v-if="this.project.applied == 1">可申请</el-button>
+              <el-button size="mini" type="primary" round plain v-if="this.project.applied == 2">已申请</el-button>
+              <el-button size="mini" type="primary" round plain v-if="this.project.applied == 3">申请成功</el-button>
+              <el-button size="mini" type="primary" round plain v-if="this.project.applied == 4">已申请，申请失败</el-button>
+              <el-button size="mini" type="primary" round plain v-if="this.project.applied == -1">项目过期</el-button>
+            </div>
+
+            <!-- 如果是作者显示申请者名单 -->
+            <div v-if="project.uid === user.id && project.receiver == -1">
+              <h2>申请者名单</h2>
+              <ul>
+                <li v-for="applicant in project.applications" :key="applicant.id">
+                  <div>用户名：{{ applicant.nickname }}</div>
+                  <div>预估价格: {{ applicant.bid }}</div>
+                  <div>邮箱: {{ applicant.email }}</div>
+                  <div>个人简历: {{ applicant.resume }}</div>
+                  <el-button type="primary" @click="setRecipient(applicant.id)">设为接收人</el-button>
+                </li>
+              </ul>
+            </div>
+            <div v-if="project.uid === user.id && project.receiver != -1">
+              <h2>接收人</h2>
+              <li v-for="applicant in project.applications" :key="applicant.id">
+                <div v-if="applicant.uid === project.receiver">
+                  <div>用户名：{{ applicant.nickname }}</div>
+                  <div>预估价格: {{ applicant.bid }}</div>
+                  <div>邮箱: {{ applicant.email }}</div>
+                  <div>个人简历: {{ applicant.resume }}</div>
+                </div>
+              </li>
             </div>
             <!-- 点击申请后 -->
-            <el-dialog title="申请详情" :visible.sync="publishVisible" :close-on-click-modal="false" custom-class="me-dialog">
+            <el-dialog title="申请详情" :visible.sync="publishVisible" :close-on-click-modal="false"
+              custom-class="me-dialog">
               <el-form ref="form" :model="applicantForm" label-width="120px">
                 <!-- 预估价格 -->
                 <el-form-item label="预估价格">
                   <el-input-number v-model="applicantForm.esprice" :min="0"></el-input-number>
                 </el-form-item>
 
+                <el-form-item label="预估时间">
+                  <el-date-picker v-model="applicantForm.preComDate" type="date" placeholder="选择日期"
+                    value-format="yyyy-MM-dd" style="width: 100%;">
+                  </el-date-picker>
+                </el-form-item>
+
                 <el-form-item label="个人简历">
                   <el-input type="textarea" v-model="applicantForm.resume" :rows="6">
                   </el-input>
-                </el-form-item>
-
-                <!-- 联系方式 -->
-                <el-form-item label="联系方式">
-                  <el-input type="textarea" v-model="applicantForm.contactInfo" placeholder="请输入联系方式"></el-input>
                 </el-form-item>
               </el-form>
               <div slot="footer" class="dialog-footer">
@@ -65,17 +111,18 @@
 
 <script>
 import CommmentItem from '@/components/comment/CommentItem'
-import { viewProject } from '@/api/project'
-import { getCommentsByArticle, publishComment } from '@/api/comment'
 import { getUserInfo } from '@/api/login'
 import default_avatar from '@/assets/img/default_avatar.png'
-import { getProjectById } from '../../api/project';
+import { getProjectById, postapply, postprojectchoose } from '../../api/project';
 
 export default {
   name: 'ProjectView',
   created() {
-    this.getProject()
-    this.publishVisible = false
+    this.getProject();
+    this.getUser();
+    this.printid();
+    this.publishVisible = false;
+
   },
   watch: {
     '$route': 'getProject'
@@ -83,15 +130,24 @@ export default {
   data() {
     return {
       project: {
-        id: '',
+        pid: '',
+        uid: '',
         title: '',
         info: '',
-        author: {},
+        nickname: '',
         category: '',
-        createDate: '',
         priceLower: '',
         priceUpper: '',
-        applicant: [],
+        applications: [],
+        applied: '', //状态
+        receiver: '', //接收人
+        avatar: '',
+        deadline: '',
+      },
+      user: {
+        id: '',
+        account: '',
+        nickname: '',
       },
       applicantForm: {
         esprice: '',
@@ -104,7 +160,7 @@ export default {
   },
   computed: {
     avatar() {
-      let avatar = this.$store.state.avatar
+      let avatar = this.project.avatar
 
       if (avatar.length > 0) {
         return avatar
@@ -112,84 +168,72 @@ export default {
       return default_avatar
     },
     title() {
-      return `${this.project.title} - 项目 - SNS 社交网络平台系统`
+      return `${this.project.title} - 项目 - SNS 社交网络平台系统`;
     }
   },
   methods: {
-    Category(id) {
-      this.$router.push({ path: `/category/${id}` })
-    },
     editProject() {
-      this.$router.push({ path: `/create/${this.project.id}` })
+      this.$router.push({ path: `/project/create/${this.project.pid}` });
+      // this.$router.push({ path: `/project/create` });
     },
-
     publishShow() {
       this.publishVisible = true;
     },
-
     getProject() {
-      let that = this
+      let that = this;
       getProjectById(that.$route.params.id).then(data => {
-        Object.assign(that.project, data.data)
+        console.log("project:", data.data); // 添加调试信息
+        Object.assign(that.project, data.data.data);
       }).catch(error => {
         if (error !== 'error') {
-          that.$message({ type: 'error', message: '文章加载失败', showClose: true })
+          that.$message({ type: 'error', message: '项目加载失败', showClose: true });
         }
-      })
+      });
     },
-    getAuthor() {
-      let that = this
-      getUserInfo(that.project.id).then(data => {
-        Object.assign(that.project.author, data.data)
+    getUser() {
+      let that = this;
+      getUserInfo(that.project.pid).then(data => {
+        Object.assign(that.user, data.data);
+        console.log("author:", this.user); // 添加调试信息
       }).catch(error => {
         if (error !== 'error') {
-          that.$message({ type: 'error', message: '作者加载失败', showClose: true })
+          that.$message({ type: 'error', message: '作者加载失败', showClose: true });
         }
-      })
+      });
+      checkIfAuthor()
     },
-    // 发布评论打算修改为申请项目
-    publishComment() {
-      let that = this
-      if (!that.comment.content) {
-        return;
-      }
-      that.comment.article.id = that.article.id
-
-      publishComment(that.comment).then(data => {
-        that.$message({ type: 'success', message: '评论成功', showClose: true })
-        that.comments.unshift(data.data)
-        that.commentCountsIncrement()
-        that.comment.content = ''
-      }).catch(error => {
-        if (error !== 'error') {
-          that.$message({ type: 'error', message: '评论失败', showClose: true })
-        }
-      })
-    },
-    //打算改为通过作者获得申请人
-    getCommentsByArticle() {
-      let that = this
-      getCommentsByArticle(that.article.id).then(data => {
-        that.comments = data.data
-      }).catch(error => {
-        if (error !== 'error') {
-          that.$message({ type: 'error', message: '评论加载失败', showClose: true })
-        }
-      })
-    },
-    commentCountsIncrement() {
-      this.article.commentCounts += 1
-    },
-    publish() {
+    setRecipient(applicantId) {
       let that = this;
 
-      this.$refs.projectForm.validate((valid) => {
-        if (valid) {
-          let project = {
-            applicant: this.project.applicant,
-            
-          };
+      postprojectchoose(that.project.pid, applicantId)
+        .then(data => {
+          that.$message({ type: 'success', message: '接收人设置成功', showClose: true });
+        })
+        .catch(error => {
+          if (error !== 'error') {
+            that.$message({ type: 'error', message: '接收人设置失败', showClose: true });
+          }
+        });
+    },
+    publish() {
+      if (this.project.applied == 2 || this.project.applied == 3 || this.project.applied == 4 || this.project.applied == -1) {
+        this.$message({
+          type: 'warning',
+          message: '您已申请过该项目',
+          showClose: true,
+        });
+        return; // 跳出方法
+      }
 
+      this.$refs.form.validate((valid) => {
+        if (valid) {
+          let that = this;
+          let newapplicant = {
+            bid: this.applicantForm.esprice,
+            resume: this.applicantForm.resume,
+            time: this.applicantForm.preComDate
+          };
+          console.log("newapplicant:", newapplicant); // 添加调试信息
           this.publishVisible = false;
 
           let loading = this.$loading({
@@ -197,7 +241,7 @@ export default {
             text: "提交申请中，请稍后...",
           });
 
-          publishProject(project)
+          postapply(this.project.pid, newapplicant)
             .then(() => {
               loading.close();
               that.$message({
@@ -214,10 +258,46 @@ export default {
                 showClose: true,
               });
             });
+
         } else {
           return false;
         }
       });
+    },
+    printid() {
+      console.log("myid" + this.$store.state.id);
+      console.log("author:", this.user.id, this.user.nickname); // 添加调试信息
+      console.log("project:", this.project.pid, this.project.title); // 添加调试信息
+    },
+    check() {
+      if (this.project.uid === this.user.id) {
+        this.project.applied = 0
+      }
+      else {
+        const isUserInApplications = this.project.applications.some(application => application.id === this.user.id);
+        const currentDate = new Date().getTime();
+        const deadlineDate = new Date(this.project.deadline).getTime();
+
+        if (isUserInApplications) {
+          this.project.applied = 1;
+        }
+        else if (currentDate > deadlineDate) {
+          this.project.applied = -1;
+        }
+        else {
+          if (this.project.receiver >= 0) {
+            if (this.project.receiver == this.user.id) {
+              this.project.applied = 3;
+            }
+            else {
+              this.project.applied = 4;
+            }
+          }
+          else {
+            this.project.applied = 2;
+          }
+        }
+      }
     },
   },
   components: {
@@ -255,7 +335,6 @@ export default {
 }
 
 .me-view-author {
-  /*margin: 30px 0;*/
   margin-top: 30px;
   vertical-align: middle;
 }
@@ -350,5 +429,4 @@ export default {
 .me-dialog .el-input__inner {
   background: #f5f5f5;
 }
-
 </style>

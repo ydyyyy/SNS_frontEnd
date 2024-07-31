@@ -6,8 +6,8 @@
   
   <script>
     import ScrollPage from '@/components/scrollpage'
-    import {getProjectcreated} from '@/api/project'
-    import ProjectItem from '../../components/project/ProjectItem.vue';
+    import {getProjectreceived} from '@/api/project'
+    import ProjectItem from '../../components/project/ProjectItem.vue'
   
     export default {
       name: "RelProjectScrollPage",
@@ -73,7 +73,7 @@
           let that = this
           that.loading = true
   
-          getProjectcreated().then(data => {
+          getProjectreceived().then(data => {
             console.log("newProjects", data.data); // 添加调试信息
             let newProjects = data.data.data
             if (newProjects && newProjects.length > 0) {
@@ -96,7 +96,7 @@
       },
       components: {
         'scroll-page': ScrollPage,
-        'project-item':Projectitem
+        'project-item':ProjectItem
       }
   
     }

@@ -1,5 +1,13 @@
-import request from '@/request'
+import axios from 'axios';
 
+const request = axios.create({
+  baseURL: 'http://localhost:8888', // 确保这个 URL 与 Spring Boot 应用程序匹配
+  timeout: 5000,
+  headers: {
+    'Content-Type': 'application/json',
+    'Oauth-Token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGFpbXMiOnsiaWQiOjMsImFjY291bnQiOiJsaHgifSwiZXhwIjoxNzIyMzY2MjQzfQ.-uAqQNKIsSJgxdPcCHxpKyIgGpmKTJrSNcg-e10ZEpQ'
+  },
+});
 
 export function getArticles(query, page) {
   return request({

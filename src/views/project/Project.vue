@@ -18,7 +18,6 @@
   
   <script>
     import CardMe from '@/components/card/CardMe'
-    import CardProject from '@/components/card/CardProject'
     import ProjectScrollPage from '@/views/common/ProjectScrollPage'
     //导入项目列表
   

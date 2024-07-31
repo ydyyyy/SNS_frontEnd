@@ -1,7 +1,6 @@
 <template>
   <el-card class="me-area" :body-style="{ padding: '16px' }">
     <div class="me-project-header">
-
       <a @click="view(pid)" class="me-project-title">{{ title }}</a>
       <el-button class="me-project-icon" type="text">置顶</el-button>
       <span class="me-pull-right me-project-count">
@@ -17,19 +16,27 @@
         <i class="me-icon-author"></i>&nbsp;{{ nickname }}
       </span>
 
-      <el-tag  size="mini" type="success" v-if="this.category == 1">Java</el-tag>
-      <el-tag  size="mini" type="success" v-if="this.category == 2">Python</el-tag>
-
+      <el-tag size="mini" type="success" v-if="category == 1">Java</el-tag>
+      <el-tag size="mini" type="success" v-if="category == 2">Python</el-tag>
+      
+      <el-tag size="mini" type="success" v-if="applied == 0">我的项目</el-tag>
+      <el-tag size="mini" type="success" v-if="applied == 1">可申请</el-tag>
+      <el-tag size="mini" type="success" v-if="applied == 2">已申请</el-tag>
+      <el-tag size="mini" type="success" v-if="applied == 3">申请成功</el-tag>
+      <el-tag size="mini" type="success" v-if="applied == 4">已申请，申请失败</el-tag>
+      <el-tag size="mini" type="success" v-if="applied == -1">项目过期</el-tag>
       <span class="me-pull-right me-project-count">
         <i class="el-icon-time"></i>&nbsp;{{ deadline | format }}
       </span>
 
+      <div class="me-view-tag"></div>
     </div>
   </el-card>
 </template>
 
 <script>
-//修改为正确数据格式
+import { getUserInfo } from '@/api/login';
+
 export default {
   name: 'ProjectItem',
   props: {
@@ -41,18 +48,70 @@ export default {
     priceLower: Number,
     priceUpper: Number,
     createDate: String,
-    nickname:String,
-    tel:String,
-    deadline:String
+    nickname: String,
+    tel: String,
+    deadline: String,
+    applied: Number,
+    receiver: Number,
+    applications: {
+      type: Array,
+      default: () => [],
+    },
   },
   data() {
-    return {}
+    return {
+      user: {
+        id: '',
+        account: '',
+        nickname: '',
+      },
+    }
   },
   methods: {
     view(id) {
-      this.$router.push({ path: `/project/view/${id}` })
-    }
-  }
+      this.$router.push({ path: `/project/view/${id}` });
+    },
+    getUser() {
+      let that = this;
+      getUserInfo(that.pid).then(data => {
+        Object.assign(that.user, data.data);
+        console.log("author:", this.user); // 添加调试信息
+        that.checkIfAuthor();
+      }).catch(error => {
+        if (error !== 'error') {
+          that.$message({ type: 'error', message: '作者加载失败', showClose: true });
+        }
+      });
+    },
+    checkIfAuthor() {
+      if (this.uid === this.user.id) {
+        this.applied = 0;
+      } else {
+        const isUserInApplications = this.applications && this.applications.some(application => application.id === this.user.id);
+        const currentDate = new Date().getTime();
+        const deadlineDate = new Date(this.deadline).getTime();
+
+        if (isUserInApplications) {
+          this.applied = 1;
+        } else if (currentDate > deadlineDate) {
+          this.applied = -1;
+        } else {
+          if (this.receiver >= 0) {
+            if (this.receiver == this.user.id) {
+              this.applied = 3;
+            } else {
+              this.applied = 4;
+            }
+          } else {
+            this.applied = 2;
+          }
+        }
+      }
+    },
+  },
+  mounted() {
+    this.getUser();
+  },
 }
 </script>
 

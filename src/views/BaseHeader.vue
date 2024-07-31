@@ -109,6 +109,7 @@ export default {
           { index: "/project/create", label: "创建项目" },
           { index: "/project/asklist", label: "我申请的项目" },
           { index: "/project/releaselist", label: "我发布的项目" },
+          { index: "/project/received", label: "我接收的项目" },
         ],
         "/activity": [
           { index: "/activity", label: "首页" },

@@ -76,10 +76,15 @@ import { publishProject, getProjectById } from "@/api/project";
 export default {
   name: "ProjectCreate",
   mounted() {
+    console.log("6666"); // 添加调试信息
     if (this.$route.params.id) {
+      
       this.getProjectById(this.$route.params.id);
     }
-    
+    this.editorToolBarToFixedWrapper = this.$_.throttle(
+      this.editorToolBarToFixed,
+      200
+    );
     window.addEventListener("scroll", this.editorToolBarToFixedWrapper, false);
 
     // 初始化分类
@@ -142,7 +147,8 @@ export default {
       let that = this;
       getProjectById(id)
         .then((data) => {
-          Object.assign(that.projectForm, data.data);
+          Object.assign(that.projectForm, data.data.data);
+          console.log("projectForm:", this.projectForm); // 添加调试信息
         })
         .catch((error) => {
           if (error !== "error") {

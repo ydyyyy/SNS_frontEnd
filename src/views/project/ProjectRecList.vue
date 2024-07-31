@@ -2,7 +2,7 @@
     <div v-title data-title="SNS 社交网络平台系统">
       <el-container>
         <el-main class="me-articles">
-          <rel-project-scroll-page></rel-project-scroll-page>
+          <rec-project-scroll-page></rec-project-scroll-page>
         </el-main>
         <el-aside>
           <card-me class="me-area"></card-me>
@@ -14,7 +14,7 @@
   
   <script>
     import CardMe from '@/components/card/CardMe'
-    import RelProjectScrollPage from '@/views/common/RelProjectScrollPage'
+    import RecProjectScrollPage from '../common/RecProjectScrollPage.vue';
     import { getProjectByuser_id } from '@/api/project'
   
     export default {
@@ -39,13 +39,13 @@
             this.myProjects = data.data
           }).catch(error => {
             if (error !== 'error') {
-              this.$message({ type: 'error', message: '我发布的项目加载失败!', showClose: true })
+              this.$message({ type: 'error', message: '我接收的项目加载失败!', showClose: true })
             }
           })
         }
       },
       components: {
-        RelProjectScrollPage,
+        RecProjectScrollPage,
         'card-me': CardMe
       }
     }

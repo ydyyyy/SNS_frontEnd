@@ -60,6 +60,9 @@ const router = new Router({
           path: "project",
           name: "Project",
           component: () => import("@/views/project/Project"),
+          meta: {
+            requireLogin: true,
+          },
         },
         {
           path: "project/view/:id",
@@ -85,6 +88,13 @@ const router = new Router({
         {
           path: "project/releaselist",
           component: () => import("@/views/project/ProjectReList"),
+          meta: {
+            requireLogin: true,
+          },
+        },
+        {
+          path: "project/received",
+          component: () => import("@/views/project/ProjectRecList"),
           meta: {
             requireLogin: true,
           },

@@ -5,7 +5,7 @@ const request = axios.create({
   timeout: 5000,
   headers: {
     'Content-Type': 'application/json',
-    'Oauth-Token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGFpbXMiOnsiaWQiOjMsImFjY291bnQiOiJsaHgifSwiZXhwIjoxNzIyMzY2MjQzfQ.-uAqQNKIsSJgxdPcCHxpKyIgGpmKTJrSNcg-e10ZEpQ'
+    'Oauth-Token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGFpbXMiOnsiaWQiOjIsImFjY291bnQiOiIxMTEifSwiZXhwIjoxNzIyNDUyNTAzfQ.8VJAJV6wbOcdEYyys-A9qGFtDs6h8yEzb-N1nzccPsc'
   },
 });
 
@@ -26,8 +26,6 @@ export function getProjects(query = {}, innerPage = {}) {
     throw error; // 重新抛出错误以便在调用方处理
   });
 }
-
-
 
   export function getProjectById(id) {
     return request({
@@ -65,5 +63,37 @@ export function getProjects(query = {}, innerPage = {}) {
       url: '/projects/create',
       method: 'post',
       data: project
+    })
+  }
+
+  export function postapply(pid,applicantForm){
+    return request({
+        url: `/projects/${pid}/apply`,
+        method: 'post',
+        data: applicantForm
+      })
+  }
+  export function postprojectchoose(pid,uid){
+    return request({
+        url: `/projects/${pid}/choose/${uid}`,
+        method: 'post'
+      })
+  }
+  export function getProjectapply() {
+    return request({
+      url: `/projects/applied`,
+      method: 'get'
+    })
+  }
+  export function getProjectcreated() {
+    return request({
+      url: `/projects/created`,
+      method: 'get'
+    })
+  }
+  export function getProjectreceived() {
+    return request({
+      url: `/projects/received`,
+      method: 'get'
     })
   }

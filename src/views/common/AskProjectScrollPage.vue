@@ -6,7 +6,7 @@
   
   <script>
     import ScrollPage from '@/components/scrollpage'
-    import {getProjectcreated} from '@/api/project'
+    import {getProjects,getProjectapply} from '@/api/project'
     import ProjectItem from '../../components/project/ProjectItem.vue';
   
     export default {
@@ -73,8 +73,9 @@
           let that = this
           that.loading = true
   
-          getProjectcreated().then(data => {
-            console.log("newProjects", data.data); // 添加调试信息
+          getProjectapply().then(data => {
+            
+            console.log("data:", data.data.data); // 添加调试信息
             let newProjects = data.data.data
             if (newProjects && newProjects.length > 0) {
               that.innerPage.pageNumber += 1
