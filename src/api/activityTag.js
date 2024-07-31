@@ -14,9 +14,9 @@ export function getAllTagsDetail() {
   })
 }
 
-export function getOningTags() {
+export function getHotTags() {
   return request({
-    url: '/activityTags/oning',
+    url: '/activityTags/hot',
     method: 'get',
   })
 }

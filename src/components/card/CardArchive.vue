@@ -28,7 +28,7 @@
     },
     methods: {
       view(year, month) {
-        this.$router.push({path: `/blog/archives/${year}/${month}`})
+        this.$router.push({path: `/activity/archives/${year}/${month}`})
       }
     }
   }

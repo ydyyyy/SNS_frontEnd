@@ -1,17 +1,22 @@
 import request from '@/request'
 
 
-export function getActivities(query, page) {
+export function getActivitiesFinished(query, page) {
   return request({
-    url: '/activities',
+    url: '/activitiesFinished',
     method: 'get',
     params: {
-      pageNumber: page.pageNumber,
-      pageSize: page.pageSize,
-      name: page.name,
-      sort: page.sort,
-      year: query.year,
-      month: query.month,
+      tagId: query.tagId,
+      categoryId: query.categoryId
+    }
+  })
+}
+
+export function getActivitiesUnFinished(query, page) {
+  return request({
+    url: '/activitiesUnFinished',
+    method: 'get',
+    params: {
       tagId: query.tagId,
       categoryId: query.categoryId
     }
@@ -54,11 +59,11 @@ export function getActivitiesByTag(id) {
 }
 
 
-export function publishActivity(article) {
+export function publishActivity(activity) {
   return request({
     url: '/activities/publish',
     method: 'post',
-    data: article
+    data: activity
   })
 }
 
@@ -74,4 +79,12 @@ export function getActivityById(id) {
     url: `/activities/${id}`,
     method: 'get'
   })
+}
+
+// 获取用户参加过的所有活动
+export function getUserActivities() {
+  return request({
+    url: `/activities/user`,
+    method: 'get'
+  });
 }

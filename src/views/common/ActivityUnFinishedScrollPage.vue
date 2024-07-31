@@ -1,4 +1,3 @@
-
 <template>
     <scroll-page :loading="loading" :offset="offset" :no-data="noData" v-on:load="load">
         <activity-item v-for="activity in activities" :key="activity.id" v-bind="activity"></activity-item>
@@ -8,10 +7,10 @@
 <script>
 import ActivityItem from '@/components/activity/ActivityItem'
 import ScrollPage from '@/components/scrollpage'
-import { getActivities } from '@/api/activity'
+import { getActivitiesUnFinished } from '@/api/activity'
 
 export default {
-    name: "ActivityScrollPage",
+    name: "ActivityUnFinishedScrollPage",
     props: {
         offset: {
             type: Number,
@@ -36,7 +35,7 @@ export default {
                 this.noData = false
                 this.activities = []
                 this.innerPage.pageNumber = 1
-                this.getActivities()
+                this.getActivitiesUnFinished()
             },
             deep: true
         },
@@ -45,13 +44,13 @@ export default {
                 this.noData = false
                 this.activities = []
                 this.innerPage = this.page
-                this.getActivities()
+                this.getActivitiesUnFinished()
             },
             deep: true
         }
     },
     created() {
-        this.getActivities()
+        this.getActivitiesUnFinished()
     },
     data() {
         return {
@@ -68,13 +67,13 @@ export default {
     },
     methods: {
         load() {
-            this.getActivities()
+            this.getActivitiesUnFinished()
         },
-        getActivities() {
+        getActivitiesUnFinished() {
             let that = this
             that.loading = true
 
-            getActivities(that.query, that.innerPage).then(data => {
+            getActivitiesUnFinished(that.query, that.innerPage).then(data => {
 
                 let newActivities = data.data
                 if (newActivities && newActivities.length > 0) {

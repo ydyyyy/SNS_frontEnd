@@ -34,7 +34,6 @@
 
   import {getArticles, getHotArtices, getNewArtices} from '@/api/article'
   import {getHotTags} from '@/api/tag'
-  import {listArchives} from '@/api/article'
 
   export default {
     name: 'Blog',
@@ -42,7 +41,6 @@
       this.getHotArtices()
       this.getNewArtices()
       this.getHotTags()
-      this.listArchives()
     },
     data() {
       return {
@@ -88,15 +86,15 @@
 
         })
       },
-      listArchives() {
-        listArchives().then((data => {
-          this.archives = data.data
-        })).catch(error => {
-          if (error !== 'error') {
-            that.$message({type: 'error', message: '文章归档加载失败!', showClose: true})
-          }
-        })
-      }
+      // listArchives() {
+      //   listArchives().then((data => {
+      //     this.archives = data.data
+      //   })).catch(error => {
+      //     if (error !== 'error') {
+      //       that.$message({type: 'error', message: '文章归档加载失败!', showClose: true})
+      //     }
+      //   })
+      // }
 
     },
     components: {

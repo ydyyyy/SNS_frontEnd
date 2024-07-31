@@ -18,24 +18,28 @@
                 </div>
 
                 <div class="me-ct-activities">
-                    <activity-scroll-page v-bind="activity"></activity-scroll-page>
+                    <p>正在进行的活动：</p>
+                    <activity-un-finished-scroll-page v-bind="activity"></activity-un-finished-scroll-page>
                 </div>
-
+                <div class="me-ct-activities">
+                    <p>已经完成结束的活动：</p>
+                    <activity-finished-scroll-page v-bind="activity"></activity-finished-scroll-page>
+                </div>
             </el-main>
         </el-container>
     </div>
 </template>
 
 <script>
-import ActivityScrollPage from '@/views/common/ActivityScrollPage'
+import ActivityFinishedScrollPage from '@/views/common/ActivityFinishedScrollPage'
+import ActivityUnFinishedScrollPage from '@/views/common/ActivityUnFinishedScrollPage'
 import { getActivitiesByCategory, getActivitiesByTag } from '@/api/activity'
-import { getTagDetail } from '@/api/tag'
-import { getCategoryDetail } from '@/api/category'
+import { getTagDetail } from '@/api/activityTag'
+import { getCategoryDetail } from '@/api/activityCategory'
 import defaultAvatar from '@/assets/img/logo.png'
 
-
 export default {
-    name: 'BlogCategoryTag',
+    name: 'ActivityCategoryTag',
     created() {
         this.getCategoryOrTagAndActivities()
     },
@@ -81,7 +85,7 @@ export default {
                 that.ct = data.data
             }).catch(error => {
                 if (error !== 'error') {
-                    that.$message({ type: 'error', message: '文章分类加载失败', showClose: true })
+                    that.$message({ type: 'error', message: '活动分类加载失败', showClose: true })
                 }
             })
         },
@@ -98,6 +102,7 @@ export default {
         getActivitiesByCategory(id) {
             let that = this
             getActivitiesByCategory(id).then(data => {
+                console.log(that.activities)
                 that.activities = data.data
             }).catch(error => {
                 if (error !== 'error') {
@@ -117,7 +122,8 @@ export default {
         }
     },
     components: {
-        ActivityScrollPage
+        ActivityFinishedScrollPage,
+        ActivityUnFinishedScrollPage
     }
 }
 </script>

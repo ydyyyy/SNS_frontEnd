@@ -165,10 +165,10 @@
     },
     methods: {
       tagOrCategory(type, id) {
-        this.$router.push({path: `/${type}/${id}`})
+        this.$router.push({path: `/blog/${type}/${id}`})
       },
       editArticle() {
-        this.$router.push({path: `/write/${this.article.id}`})
+        this.$router.push({path: `/blogwrite/${this.article.id}`})
       },
       getArticle() {
         let that = this

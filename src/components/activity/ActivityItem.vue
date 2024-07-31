@@ -4,24 +4,26 @@
             <a @click="viewActivity(id)" class="activity-title">{{ title }}</a>
             <el-button v-if="weight > 0" class="activity-icon" type="text">热门</el-button>
             <span class="activity-count">
-                <i class="el-icon-time"></i>&nbsp;{{ activityDate | format }}
+                <i class="el-icon-time"></i>&nbsp;{{ createDate | format }}
             </span>
             <span class="activity-count">
-                <i class="el-icon-location"></i>&nbsp;{{ location }}
+                <i class="el-icon-date"></i>&nbsp;{{ startDate }} - {{ endDate }}
             </span>
         </div>
 
         <div class="activity-description">
-            {{ description }}
+            {{ summary }}
         </div>
 
         <div class="activity-footer">
             <span class="activity-info">
-                <i class="el-icon-user"></i>&nbsp;{{ organizer }}
+                <i class="el-icon-user"></i>&nbsp;{{ author.nickname }}
             </span>
 
             <el-tag v-for="tag in tags" :key="tag.tagname" size="mini" type="info">{{ tag.tagname }}</el-tag>
-
+            <span class="activity-count">
+	    	    <i class="el-icon-comment"></i>&nbsp;{{commentCounts}}
+	        </span>
             <span class="activity-count">
                 <i class="el-icon-view"></i>&nbsp;{{ viewCounts }}
             </span>
@@ -35,15 +37,17 @@ import { formatTime } from "../../utils/time";
 export default {
     name: 'ActivityItem',
     props: {
-        id: Number,
-        weight: Number,
-        title: String,
-        activityDate: String,
-        location: String,
-        description: String,
-        organizer: String,
-        tags: Array,
-        viewCounts: Number
+        id: Number, //活动id
+        weight: Number, //权重
+        title: String,  //活动标题
+        commentCounts: Number,  //评论数目
+        createDate: String,   //发布日期
+        summary: String,    //活动摘要
+        author: Object,  //发布者
+        tags: Array,    //获取标签
+        viewCounts: Number, //浏览数量
+        startDate: String, // 添加开始日期属性
+        endDate: String    // 添加结束日期属性
     },
     data() {
         return {}
@@ -52,9 +56,13 @@ export default {
         viewActivity(id) {
             this.$router.push({ path: `/activity/view/${id}` })
         }
+    },
+    filters: {
+        format(value) {
+            return formatTime(value);
+        }
     }
 }
-
 </script>
 
 <style scoped>

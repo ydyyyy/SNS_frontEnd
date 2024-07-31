@@ -184,6 +184,7 @@ export default {
       let that = this;
       getArticleById(id)
         .then((data) => {
+          console.log(data.data); // 调试用，查看返回的数据
           Object.assign(that.articleForm, data.data);
           that.articleForm.editor.value = data.data.body.content;
 
@@ -269,7 +270,7 @@ export default {
                 type: "success",
                 showClose: true,
               });
-              that.$router.push({ path: `/view/${data.data.articleId}` });
+              that.$router.push({ path: `/blog/view/${data.data.articleId}` });
             })
             .catch((error) => {
               loading.close();

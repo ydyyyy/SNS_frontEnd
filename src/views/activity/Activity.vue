@@ -3,11 +3,11 @@
     <el-container>
       <span>正在进行的活动：</span>
       <el-main class="me-activities">
-        <activity-scroll-page></activity-scroll-page>
+        <activity-un-finished-scroll-page></activity-un-finished-scroll-page>
       </el-main>
       <el-aside>
         <card-me class="me-area"></card-me>
-        <card-tag :tags="hotTags"></card-tag>
+        <card-activity-tag :activityTags="hotTags"></card-activity-tag>
         <card-activity cardHeader="最热活动" :activities="hotActivities"></card-activity>
         <card-activity cardHeader="最新活动" :activities="newActivities"></card-activity>
       </el-aside>
@@ -19,10 +19,10 @@
 import CardActivityMe from '@/components/card/CardActivityMe'
 import CardActivity from '@/components/card/CardActivity'
 import CardArchive from '@/components/card/CardArchive'
-import CardActivityTag from '@/components/card/CardTag'
-import ActivityScrollPage from '@/views/common/ActivityScrollPage'
+import CardActivityTag from '@/components/card/CardActivityTag'
+import ActivityUnFinishedScrollPage from '@/views/common/ActivityUnFinishedScrollPage'
 import { getActivities, getHotActivities, getNewActivities } from '@/api/activity'
-import { getOningTags } from '@/api/activityTag'
+import { getHotTags } from '@/api/activityTag'
 import { listArchives } from '@/api/activity'
 
 export default {
@@ -43,7 +43,7 @@ export default {
       Promise.all([
         this.getHotActivities(),
         this.getNewActivities(),
-        this.getOningTags(),
+        this.getHotTags(),
         this.listArchives()
       ]).catch(error => {
         this.$message({ type: 'error', message: '数据加载失败!', showClose: true })
@@ -59,8 +59,8 @@ export default {
         this.newActivities = data.data
       })
     },
-    getOningTags() {
-      return getOningTags().then(data => {
+    getHotTags() {
+      return getHotTags().then(data => {
         this.hotTags = data.data
       })
     },
@@ -73,8 +73,8 @@ export default {
   components: {
     'card-me': CardActivityMe,
     'card-activity': CardActivity,
-    'card-tag': CardActivityTag,
-    ActivityScrollPage,
+    'card-activity-tag': CardActivityTag,
+    ActivityUnFinishedScrollPage,
     CardArchive
   }
 }

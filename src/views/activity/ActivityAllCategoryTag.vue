@@ -80,7 +80,7 @@ export default {
     },
     methods: {
         view(id) {
-            this.$router.push({ path: `/blog/${this.currentActiveName}/${id}` });
+            this.$router.push({ path: `/activity/${this.currentActiveName}/${id}` });
         },
         getCategorys() {
             let that = this;
