@@ -7,7 +7,14 @@ export function getCommentsByArticle(id) {
     method: "get",
   });
 }
-// 已写好接口文档
+
+export function getCommentsByActivity(id) {
+  return request({
+    url: `/comments/activity/${id}`,
+    method: 'get'
+  })
+}
+
 export function publishComment(comment) {
   return request({
     url: "/comments/create/change",
@@ -15,3 +22,12 @@ export function publishComment(comment) {
     data: comment,
   });
 }
+
+export function publishActivityComment(comment) {
+  return request({
+    url: '/activity/comments/create/change',
+    method: 'post',
+    data: comment
+  })
+}
+

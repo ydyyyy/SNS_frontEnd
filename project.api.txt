@@ -1,0 +1,24 @@
+project.api:
+			获取所有的project getProject()、
+			根据user_id获取project getProjectByuser_id(user_id)、
+			根据申请人获取project getProjectByapplicant_id(applicant_id)、
+			查看project viewProject(id)、
+			根据类别获取project getProjectsByCategory(id) 、
+			getProjectByid(id)、
+			获取项目列表：export function getProjects(query, page) {
+    return request({
+      url: '/projects',
+      method: 'get',
+      params: {
+        pageNumber: page.pageNumber,
+        pageSize: page.pageSize,
+        name: page.name,
+        sort: page.sort,
+        year: query.year,
+        month: query.month,
+        tagId: query.tagId,
+        categoryId: query.categoryId
+      }
+    })
+  }
+发包，任务属性：id，标题，需求详情，分类，投标截止日期，价格区间，联系方式、发布人、申请列表

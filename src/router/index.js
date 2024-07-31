@@ -70,12 +70,84 @@ const router = new Router({
           path: "project",
           name: "Project",
           component: () => import("@/views/project/Project"),
+          meta: {
+            requireLogin: true,
+          },
+        },
+        {
+          path: "project/view/:id",
+          component: () => import("@/views/project/ProjectView"),
+          meta: {
+            requireLogin: true,
+          },
+        },
+        {
+          path: "project/create/:id?",
+          component: () => import("@/views/project/ProjectCreate"),
+          meta: {
+            requireLogin: true,
+          },
+        },
+        {
+          path: "project/asklist",
+          component: () => import("@/views/project/ProjectAskList"),
+          meta: {
+            requireLogin: true,
+          },
+        },
+        {
+          path: "project/releaselist",
+          component: () => import("@/views/project/ProjectReList"),
+          meta: {
+            requireLogin: true,
+          },
+        },
+        {
+          path: "project/received",
+          component: () => import("@/views/project/ProjectRecList"),
+          meta: {
+            requireLogin: true,
+          },
         },
         // 活动模块
         {
           path: "activity",
           name: "Activity",
           component: () => import("@/views/activity/Activity"),
+        },
+        {
+          path: "activity/myActivity",
+          component: () => import("@/views/activity/MyActivity"),
+        },
+        {
+          path: "activity/view/:id",
+          component: () => import("@/views/activity/ActivityView"),
+        },
+        {
+          path: "activity/:type/all",
+          component: () => import("@/views/activity/ActivityAllCategoryTag"),
+        },
+        {
+          path: "activity/:type/:id",
+          component: () => import("@/views/activity/ActivityCategoryTag"),
+        },
+        {
+          path: "activity/archives/:year?/:month?",
+          component: () => import("@/views/activity/ActivityArchive"),
+        },
+        {
+          path: "activitywrite/:id?",
+          component: () => import("@/views/activity/ActivityWrite"),
+          meta: {
+            requireLogin: true,
+          },
+        },
+        {
+          path: "activity/myActivity",
+          component: () => import("@/views/activity/MyActivity"),
+          meta: {
+            requireLogin: true,
+          },
         },
         // 内推模块
         {

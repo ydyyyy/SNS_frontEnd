@@ -34,7 +34,6 @@
 
   import {getArticles, getHotArtices, getNewArtices} from '@/api/article'
   import {getHotTags} from '@/api/tag'
-  import {listArchives} from '@/api/article'
 
   export default {
     name: 'Blog',
@@ -42,7 +41,6 @@
       this.getHotArtices()
       this.getNewArtices()
       this.getHotTags()
-      this.listArchives()
     },
     data() {
       return {
