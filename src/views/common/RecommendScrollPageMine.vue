@@ -7,10 +7,10 @@
   <script>
     import RecommendItem from '@/components/recommend/RecommendItem'
     import ScrollPage from '@/components/scrollpage'
-    import {getRecommend} from '@/api/recommendApi/recommend'
+    import {getRecommendMine} from '@/api/recommendApi/recommend'
   
     export default {
-      name: "RecommendScrollPage",
+      name: "RecommendScrollPageMine",
       props: {
         offset: {
           type: Number,
@@ -35,7 +35,7 @@
             this.noData = false
             this.articles = []
             this.innerPage.pageNumber = 1
-            this.getRecommend()
+            this.getRecommendMine()
           },
           deep: true
         },
@@ -44,13 +44,13 @@
             this.noData = false
             this.articles = []
             this.innerPage = this.page
-            this.getRecommend()
+            this.getRecommendMine()
           },
           deep: true
         }
       },
       created() {
-        this.getRecommend()
+        this.getRecommendMine()
       },
       data() {
         return {
@@ -67,13 +67,13 @@
       },
       methods: {
         load() {
-          this.getRecommend()
+          this.getRecommendMine()
         },
-        getRecommend() {
+        getRecommendMine() {
           let that = this
           that.loading = true
   
-          getRecommend(that.query, that.innerPage).then(data => {
+          getRecommendMine().then(data => {
             let newArticles = data.data
             if (newArticles && newArticles.length > 0) {
               that.innerPage.pageNumber += 1

@@ -106,6 +106,7 @@ export default {
           { index: "/blog/log", label: "日志" },
           { index: "/blog/messageBoard", label: "留言板" },
           { index: "/blog/write", label: "写文章" },
+          { index: "/blog/mine", label: "我的文章" },
           { index: "/blog/audit", label: "审核文章" },
         ],
         "/recommend": [
@@ -114,6 +115,7 @@ export default {
           { index: "/recommend/tag/all", label: "技术栈分类" },
           { index: "/recommend/archives", label: "内推归档" },
           { index: "/recommend/write", label: "发布内推" },
+          { index: "/recommend/mine", label: "我的内推" },
           { index: "/recommend/audit", label: "审核内推" },
         ],
         // 添加更多导航项及其对应的菜单数组
@@ -141,15 +143,24 @@ export default {
     filterMenuItems(menuItems) {
       const filteredItems = {};
       const auditRegex = /\/.*\/audit/; // 匹配任意路径中的 /audit
+      const logRegex = /\/.*\/log/; // 匹配任意路径中的 /log
+      const messageBoardRegex = /\/.*\/messageBoard/; // 匹配任意路径中的 /audit
       for (const key in menuItems) {
         if (Object.hasOwn(menuItems, key)) {
           filteredItems[key] = menuItems[key].filter(item => {
             // 如果status为0则不包含审核文章
-            if (this.$store.state.adminStatus === 0 && auditRegex.test(item.index)) {
+            if(this.$store.state.adminStatus === 0){
+            if ((auditRegex.test(item.index) || logRegex.test(item.index) || messageBoardRegex.test(item.index))) {
               return false;
             }
             return true;
-          });
+          }
+          else if(this.$store.state.adminStatus === 1) {
+            if(this.$store.state.adminStatus === 1 && (auditRegex.test(item.index) || logRegex.test(item.index) || messageBoardRegex.test(item.index))) {
+              return true;
+            }
+            return false;
+          }});
         }
       }
       return filteredItems;

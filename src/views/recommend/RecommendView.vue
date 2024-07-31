@@ -38,6 +38,13 @@
                 size="mini"
                 round
                 icon="el-icon-edit">编辑</el-button>
+                <el-button
+              v-if="this.article.author.id == this.$store.state.id"
+              @click="deleteArticle()"
+              style="position: absolute;left: 65%;"
+              size="mini"
+              round
+              icon="el-icon-delete">删除</el-button>
             </div>
             <div class="me-view-content">
               <markdown-editor :editor=article.editor></markdown-editor>
@@ -53,13 +60,13 @@
             </div>
   
             <div class="me-view-tag">
-              标签：
+              技术栈：
               <!--<el-tag v-for="t in article.tags" :key="t.id" class="me-view-tag-item" size="mini" type="success">{{t.tagname}}</el-tag>-->
               <el-button @click="tagOrCategory('tag', t.id)" size="mini" type="primary" v-for="t in article.tags" :key="t.id" round plain>{{t.tagname}}</el-button>
             </div>
   
             <div class="me-view-tag">
-              文章分类：
+              所属公司：
               <!--<span style="font-weight: 600">{{article.category.categoryname}}</span>-->
               <el-button @click="tagOrCategory('category', article.category.id)" size="mini" type="primary" round plain>{{article.category.categoryname}}</el-button>
             </div>
@@ -102,6 +109,7 @@
                 :index="index"
                 :rootCommentCounts="comments.length"
                 @commentCountsIncrement="commentCountsIncrement"
+                @getArticle="getArticle"
                 :key="c.id">
               </comment-item-rec>
   
@@ -117,7 +125,7 @@
   <script>
     import MarkdownEditor from '@/components/markdown/MarkdownEditor'
     import CommentItemRec from '@/components/comment/CommentItemRec'
-    import {viewRecommend,agreeRecommend,rejectRecommend} from '@/api/recommendApi/recommend'
+    import {viewRecommend,agreeRecommend,rejectRecommend,deleteRecommend} from '@/api/recommendApi/recommend'
     import {getCommentsByRecommend, publishCommentRec} from '@/api/recommendApi/recComment'
   
     import default_avatar from '@/assets/img/default_avatar.png'
@@ -186,6 +194,26 @@
         editArticle() {
           this.$router.push({path: `/recommend/write/${this.article.id}`})
         },
+        deleteArticle(){
+        this.$confirm('此操作将永久删除该内推, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          deleteRecommend(this.article.id).then(data => {
+            this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+          this.$router.push({path: `/recommend`})
+        })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
+      },
         getArticle() {
           let that = this
           viewRecommend(that.$route.params.id).then(data => {
@@ -213,6 +241,7 @@
             that.comments.unshift(data.data)
             that.commentCountsIncrement()
             that.comment.content = ''
+            that.getArticle()
           }).catch(error => {
             if (error !== 'error') {
               that.$message({type: 'error', message: '评论失败', showClose: true})

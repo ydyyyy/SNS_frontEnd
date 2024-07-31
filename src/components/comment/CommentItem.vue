@@ -28,7 +28,7 @@
           <div style="font-size: 14px">
             <span class="me-reply-user">{{c.author.nickname}}:&nbsp;&nbsp;</span>
 
-            <span v-if="c.level == 2" class="me-reply-user">@{{c.toUser.nickname}} </span>
+            <span v-if="c.level != 0 " class="me-reply-user">@{{c.toUser.nickname}} </span>
 
             <span>{{c.content}}</span>
           </div>
@@ -118,6 +118,7 @@
           that.comment.childrens.unshift(data.data)
           that.$emit('commentCountsIncrement')
           that.showComment(that.commentShowIndex)
+          that.$emit('getArticle')
         }).catch(error => {
           if (error !== 'error') {
             that.$message({type: 'error', message: '评论失败', showClose: true})

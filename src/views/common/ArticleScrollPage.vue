@@ -1,5 +1,5 @@
 <template>
-  <scroll-page :loading="loading" :offset="offset" :no-data="noData" v-on:load="load">
+  <scroll-page :loading="loading" :offset="offset" :no-data="noData">
     <article-item v-for="a in articles" :key="a.id" v-bind="a"></article-item>
   </scroll-page>
 </template>

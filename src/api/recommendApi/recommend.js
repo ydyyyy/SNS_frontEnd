@@ -17,6 +17,13 @@ export function getRecommend(query, page) {
     }
   })
 }
+//-----------------------------------------------
+export function getRecommendMine() {
+  return request({
+    url: "/recommend/mine",
+    method: "get",
+  });
+}
 //已完成
 export function getHotRecommend() {
   return request({
@@ -75,3 +82,11 @@ export function rejectRecommend(id) {
     method: "get",
   });
 }
+//-----------------------------------------------
+export function deleteRecommend(id) {
+  return request({
+    url: `/recommend/delete/${id}`,
+    method: "delete",
+  });
+}
+

@@ -30,22 +30,14 @@ export default {
     imgAdd(pos, $file) {
       let that = this;
       let formdata = new FormData();
-      formdata.append("image", $file);
+      formdata.append("file", $file);
       formdata.forEach((value, key) => {
         console.log(key, value);
       });
       upload(formdata)
         .then((data) => {
           // 第二步.将返回的url替换到文本原位置![...](./0) -> ![...](url)
-          if (data.code == 0) {
-            that.$refs.md.$img2Url(pos, data.data.url);
-          } else {
-            that.$message({
-              message: data.msg,
-              type: "error",
-              showClose: true,
-            });
-          }
+            that.$refs.md.$img2Url(pos, data.data);
         })
         .catch((err) => {
           that.$message({ message: err, type: "error", showClose: true });

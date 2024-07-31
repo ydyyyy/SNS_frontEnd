@@ -38,6 +38,13 @@
               size="mini"
               round
               icon="el-icon-edit">编辑</el-button>
+              <el-button
+              v-if="this.article.author.id == this.$store.state.id"
+              @click="deleteArticle()"
+              style="position: absolute;left: 65%;"
+              size="mini"
+              round
+              icon="el-icon-delete">删除</el-button>
           </div>
           <div class="me-view-content">
             <markdown-editor :editor=article.editor></markdown-editor>
@@ -102,6 +109,7 @@
               :index="index"
               :rootCommentCounts="comments.length"
               @commentCountsIncrement="commentCountsIncrement"
+              @getArticle="getArticle"
               :key="c.id">
             </commment-item>
 
@@ -117,7 +125,7 @@
 <script>
   import MarkdownEditor from '@/components/markdown/MarkdownEditor'
   import CommmentItem from '@/components/comment/CommentItem'
-  import {viewArticle,agreeArticle,rejectArticle} from '@/api/article'
+  import {viewArticle,agreeArticle,rejectArticle,deleteArticle} from '@/api/article'
   import {getCommentsByArticle, publishComment} from '@/api/comment'
 
   import default_avatar from '@/assets/img/default_avatar.png'
@@ -186,6 +194,26 @@
       editArticle() {
         this.$router.push({path: `/blog/write/${this.article.id}`})
       },
+      deleteArticle(){
+        this.$confirm('此操作将永久删除该文章, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          deleteArticle(this.article.id).then(data => {
+            this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+          this.$router.push({path: `/blog`})
+        })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
+      },
       getArticle() {
         let that = this
         viewArticle(that.$route.params.id).then(data => {
@@ -213,6 +241,7 @@
           that.comments.unshift(data.data)
           that.commentCountsIncrement()
           that.comment.content = ''
+          that.getArticle()
         }).catch(error => {
           if (error !== 'error') {
             that.$message({type: 'error', message: '评论失败', showClose: true})

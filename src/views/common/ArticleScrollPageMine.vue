@@ -1,16 +1,16 @@
 <template>
     <scroll-page :loading="loading" :offset="offset" :no-data="noData">
-      <recommend-item v-for="a in articles" :key="a.id" v-bind="a"></recommend-item>
+      <article-item v-for="a in articles" :key="a.id" v-bind="a"></article-item>
     </scroll-page>
   </template>
   
   <script>
-    import RecommendItem from '@/components/recommend/RecommendItem'
+    import ArticleItem from '@/components/article/ArticleItem'
     import ScrollPage from '@/components/scrollpage'
-    import {getRecommend} from '@/api/recommendApi/recommend'
+    import {getArticlesMine} from '@/api/article'
   
     export default {
-      name: "RecommendScrollPage",
+      name: "ArticleScrollPageMine",
       props: {
         offset: {
           type: Number,
@@ -35,7 +35,7 @@
             this.noData = false
             this.articles = []
             this.innerPage.pageNumber = 1
-            this.getRecommend()
+            this.getArticles()
           },
           deep: true
         },
@@ -44,13 +44,13 @@
             this.noData = false
             this.articles = []
             this.innerPage = this.page
-            this.getRecommend()
+            this.getArticles()
           },
           deep: true
         }
       },
       created() {
-        this.getRecommend()
+        this.getArticlesMine()
       },
       data() {
         return {
@@ -67,13 +67,13 @@
       },
       methods: {
         load() {
-          this.getRecommend()
+          this.getArticlesMine()
         },
-        getRecommend() {
+        getArticlesMine() {
           let that = this
           that.loading = true
   
-          getRecommend(that.query, that.innerPage).then(data => {
+          getArticlesMine().then(data => {
             let newArticles = data.data
             if (newArticles && newArticles.length > 0) {
               that.innerPage.pageNumber += 1
@@ -93,8 +93,8 @@
         }
       },
       components: {
-        'recommend-item': RecommendItem,
-        'scroll-page': ScrollPage,
+        'article-item': ArticleItem,
+        'scroll-page': ScrollPage
       }
   
     }

@@ -61,6 +61,10 @@ const router = new Router({
           path: "/blog/audit",
           component: () => import("@/views/blog/BlogAudit"),
         },
+        {
+          path: "/blog/mine",
+          component: () => import("@/views/blog/BlogMine"),
+        },
         // 抓包模块
         {
           path: "project",
@@ -106,6 +110,10 @@ const router = new Router({
         {
           path: "/recommend/audit",
           component: () => import("@/views/recommend/RecommendAudit"),
+        },
+        {
+          path: "/recommend/mine",
+          component: () => import("@/views/recommend/RecommendMine"),
         },
         // 个人中心
         {

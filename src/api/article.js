@@ -17,6 +17,13 @@ export function getArticles(query, page) {
     },
   });
 }
+//-----------------------------------------------
+export function getArticlesMine() {
+  return request({
+    url: "/articles/mine",
+    method: "get",
+  });
+}
 //已完成
 export function getHotArtices() {
   return request({
@@ -87,5 +94,12 @@ export function getArticleById(id) {
   return request({
     url: `/articles/${id}`,
     method: "get",
+  });
+}
+//-----------------------------------------------
+export function deleteArticle(id) {
+  return request({
+    url: `/articles/delete/${id}`,
+    method: "delete",
   });
 }

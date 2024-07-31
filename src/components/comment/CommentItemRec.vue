@@ -28,7 +28,7 @@
             <div style="font-size: 14px">
               <span class="me-reply-user">{{c.author.nickname}}:&nbsp;&nbsp;</span>
   
-              <span v-if="c.level == 2 " class="me-reply-user">@{{c.toUser.nickname}} </span>
+              <span v-if="c.level != 0 " class="me-reply-user">@{{c.toUser.nickname}} </span>
   
               <span>{{c.content}}</span>
             </div>
@@ -82,7 +82,7 @@
         }
       },
       mounted() {
-          console.log(this.comment, '我是评论组件里面的comment');
+        console.log(this.comment, '我是comment')
       },
       methods: {
         showComment(commentShowIndex, toUser) {
@@ -112,7 +112,6 @@
           if (!that.reply.content) {
             return;
           }
-          console.log(that.reply, '我是reply')
           publishCommentRec(that.reply).then(data => {
             that.$message({type: 'success', message: '评论成功', showClose: true})
             if(!that.comment.childrens){
@@ -121,6 +120,7 @@
             that.comment.childrens.unshift(data.data)
             that.$emit('commentCountsIncrement')
             that.showComment(that.commentShowIndex)
+            that.$emit('getArticle')
           }).catch(error => {
             if (error !== 'error') {
               that.$message({type: 'error', message: '评论失败', showClose: true})

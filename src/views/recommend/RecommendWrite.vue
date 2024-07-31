@@ -15,7 +15,7 @@
               type="textarea"
               autosize
               v-model="articleForm.title"
-              placeholder="请输入岗位"
+              placeholder="请输入招聘岗位"
               class="me-write-input"
             >
             </el-input>

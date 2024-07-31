@@ -18,8 +18,8 @@
       <div class="me-article-footer">
             <span class="me-article-author">
               <i class="me-icon-author"></i>&nbsp;{{author.nickname}}
-          </span>
-  
+           </span>
+           <i class="fas fa-magic" @click="handleClick"></i>&nbsp;请他内推
         <el-tag v-for="t in tags" :key="t.tagname" size="mini" type="success">{{t.tagname}}</el-tag>
   
         <span class="me-pull-right me-article-count">
@@ -53,6 +53,9 @@
         view(id) {
           this.$router.push({path: `/recommend/view/${id}`})
         }
+      },
+      mounted() {
+        console.log(this.author,"author")
       }
     }
   </script>

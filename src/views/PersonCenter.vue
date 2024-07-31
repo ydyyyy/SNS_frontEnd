@@ -1,6 +1,6 @@
 <template>
   <div class="personCenter-container">
-    <el-row class="row-container" :gutter="90">
+    <el-row class="row-container" :gutter="9">
       <el-col :span="10" class="card-me" >
         <card-me class="me-area"></card-me>
         <button-me class="me-button"></button-me>
@@ -9,22 +9,22 @@
         <section class="pricing-table">
           <div class="card">
             <h6 class="type">参与内推数</h6>
-            <div class="price">20</div>
+            <div class="price">2</div>
             <h5 class="plan">内推 </h5>
             <ul class="details">
-              <li>FREE Stickers</li>
-              <li>FREE Delivery</li>
+              <li>Total Views: 45</li>
+              <li>Total Comments: 4</li>
               <li>24/7 support</li>
             </ul>
           </div>
 
           <div class="card">
             <h6 class="type">发布博文数</h6>
-            <div class="price">50</div>
+            <div class="price">5</div>
             <h5 class="plan">博客 </h5>
             <ul class="details">
-              <li>FREE Stickers</li>
-              <li>FREE Delivery</li>
+              <li>Total Views: 82</li>
+              <li>Total Comments: 8</li>
               <li>24/7 support</li>
             </ul>
           </div>
@@ -34,8 +34,8 @@
             <div class="price">6</div>
             <h5 class="plan">发包</h5>
             <ul class="details">
-              <li>FREE Stickers</li>
-              <li>FREE Delivery</li>
+              <li>Total Views: 23</li>
+              <li>Total Comments: 3</li>
               <li>24/7 support</li>
             </ul>
           </div>
@@ -67,13 +67,13 @@ export default {
   margin-left: 95px
 }
 .me-area{
-  margin-top: 10px;
+  margin-top: 20px;
 }
 .pricing-table {
   display: flex;
 }
 .card {
-  width: 220px;
+  width: 240px;
   height: 470px;
   padding: 30px;
   border-radius: 1.5rem;

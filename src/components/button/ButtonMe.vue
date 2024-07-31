@@ -58,10 +58,11 @@
         <el-form-item label="用户头像" prop="avatar">
           <div v-if="formData.avatar" class="avatar-preview">
             <img :src="formData.avatar" alt="用户头像" class="avatar-image" />
-            <el-button type="text" @click="editAvatar = true"
+            
+          </div>
+          <el-button type="text" @click="editAvatar = true"
               >修改头像</el-button
             >
-          </div>
           <el-upload
             v-if="editAvatar"
             action="http://localhost:8888/users/updateUser"
@@ -150,6 +151,7 @@ export default {
     },
     handleSuccess(response, file, fileList) {
       this.fileList = fileList; // 更新头像 URL
+      console.log("44444444", response);
       this.formData.avatar = response;
       console.log("Upload success:", response, file, fileList, this.formData);
     },
