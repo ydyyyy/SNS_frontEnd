@@ -46,3 +46,10 @@ export function register(account, nickname, password) {
     data,
   });
 }
+//---------------------------------------------------------------
+export function getCardInfo() {
+  return request({
+    url: "/users/cardInfo",
+    method: "get",
+  });
+}

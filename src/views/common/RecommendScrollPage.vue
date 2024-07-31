@@ -74,10 +74,12 @@
           that.loading = true
   
           getRecommend(that.query, that.innerPage).then(data => {
+            console.log(data,"]]]]]]]]]]]]]]")
             let newArticles = data.data
             if (newArticles && newArticles.length > 0) {
               that.innerPage.pageNumber += 1
               that.articles = that.articles.concat(newArticles)
+              console.log(that.articles, "]]]]]]]]]]]]]]")
             } else {
               that.noData = true
             }

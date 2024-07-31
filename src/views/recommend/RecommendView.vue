@@ -181,11 +181,13 @@
         agree() {
         agreeRecommend(this.$route.params.id).then(data => {
           this.$message({type: 'success', message: '批准成功', showClose: true})
+          this.$router.push({path: `/recommend/audit`})
         })
       },
       reject() {
         rejectRecommend(this.$route.params.id).then(data => {
           this.$message({type: 'success', message: '拒绝成功', showClose: true})
+          this.$router.push({path: `/recommend/audit`})
         })
       },
         tagOrCategory(type, id) {

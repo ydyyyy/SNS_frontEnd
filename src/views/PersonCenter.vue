@@ -9,34 +9,34 @@
         <section class="pricing-table">
           <div class="card">
             <h6 class="type">参与内推数</h6>
-            <div class="price">2</div>
+            <div class="price">{{ cardInfo.recommendCount }}</div>
             <h5 class="plan">内推 </h5>
             <ul class="details">
-              <li>Total Views: 45</li>
-              <li>Total Comments: 4</li>
-              <li>24/7 support</li>
+              <li>Total Views: {{ cardInfo.recommendViewCount }}</li>
+              <li>Total Coms: {{ cardInfo.recommendCommentCount }}</li>
+              <li>Active Users: {{ cardInfo.recommendActiveUsers }}</li>
             </ul>
           </div>
 
           <div class="card">
             <h6 class="type">发布博文数</h6>
-            <div class="price">5</div>
+            <div class="price">{{ cardInfo.blogCount }}</div>
             <h5 class="plan">博客 </h5>
             <ul class="details">
-              <li>Total Views: 82</li>
-              <li>Total Comments: 8</li>
-              <li>24/7 support</li>
+              <li>Total Views: {{ cardInfo.blogViewCount }}</li>
+              <li>Total Coms: {{ cardInfo.blogCommentCount }}</li>
+              <li>Active Users: {{ cardInfo.blogActiveUsers }}</li>
             </ul>
           </div>
 
           <div class="card">
             <h6 class="type">参与项目数</h6>
-            <div class="price">6</div>
+            <div class="price">{{ cardInfo.projectCount }}</div>
             <h5 class="plan">发包</h5>
             <ul class="details">
-              <li>Total Views: 23</li>
-              <li>Total Comments: 3</li>
-              <li>24/7 support</li>
+              <li>Total Views: {{ cardInfo.projectViewCount }}</li>
+              <li>Total Coms: {{ cardInfo.projectCommentCount }}</li>
+              <li>Active Users: {{ cardInfo.projectActiveUsers }}</li>
             </ul>
           </div>
         </section>
@@ -48,6 +48,7 @@
 <script>
 import CardMe from "@/components/card/CardMe";
 import ButtonMe from "@/components/button/ButtonMe";
+import { getCardInfo } from "@/api/login";
 export default {
   name: "PersonCenter",
   components: {
@@ -55,9 +56,34 @@ export default {
     "button-me": ButtonMe,
   },
   data() {
-    return {};
+    return {
+      cardInfo: {
+        blogActiveUsers: 12,
+        blogViewCount: 63,
+        blogCommentCount: 35,
+        blogCount: 5,
+        projectActiveUsers: 8,
+        projectViewCount: 16,
+        projectCommentCount: 24,
+        projectCount: 3,
+        recommendActiveUsers: 6,
+        recommendViewCount: 68,
+        recommendCommentCount: 36,
+        recommendCount: 8,
+      },
+    };
   },
-  methods: {},
+  methods: {
+    getCardInfo() {
+      getCardInfo().then((res) => {
+        console.log(res);
+        this.cardInfo = res.data;
+      });
+    },
+  },
+  mounted() {
+    getCardInfo();
+  }
 };
 </script>
 
@@ -189,6 +215,7 @@ export default {
 
 .details {
   text-transform: capitalize;
+  margin-left: 5px;
 }
 
 .details li {
