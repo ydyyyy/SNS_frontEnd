@@ -134,6 +134,15 @@ export default {
           // { index: "/activity/messageBoard", label: "留言板" },
           { index: "/activitywrite", label: "发布活动" },
         ],
+        // "/activity": [
+        //   { index: "/activity", label: "首页" },
+        //   { index: "/activity/category/all", label: "活动分类" },
+        //   { index: "/activity/tag/all", label: "标签" },
+        //   { index: "/activity/archives", label: "历史活动" },
+        //   { index: "/activity/myActivity", label: "我发布过的活动" },
+        //   // { index: "/activity/messageBoard", label: "留言板" },
+        //   { index: "/activitywrite", label: "发布活动" },
+        // ],
         // 添加更多导航项及其对应的菜单数组
         // ...
       },

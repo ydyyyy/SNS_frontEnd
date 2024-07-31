@@ -18,9 +18,11 @@
                 </div>
 
                 <div class="me-ct-activities">
+                    <p>正在进行的活动：</p>
                     <activity-un-finished-scroll-page v-bind="activity"></activity-un-finished-scroll-page>
                 </div>
                 <div class="me-ct-activities">
+                    <p>已经完成结束的活动：</p>
                     <activity-finished-scroll-page v-bind="activity"></activity-finished-scroll-page>
                 </div>
             </el-main>
@@ -35,7 +37,6 @@ import { getActivitiesByCategory, getActivitiesByTag } from '@/api/activity'
 import { getTagDetail } from '@/api/activityTag'
 import { getCategoryDetail } from '@/api/activityCategory'
 import defaultAvatar from '@/assets/img/logo.png'
-
 
 export default {
     name: 'ActivityCategoryTag',
@@ -101,6 +102,7 @@ export default {
         getActivitiesByCategory(id) {
             let that = this
             getActivitiesByCategory(id).then(data => {
+                console.log(that.activities)
                 that.activities = data.data
             }).catch(error => {
                 if (error !== 'error') {

@@ -19,10 +19,9 @@
               <div class="me-view-info">
                 <span>{{activity.author.nickname}}</span>
                 <div class="me-view-meta">
-                  <span>{{activity.createDate | format}}</span> (创建日期)
-                  <span>活动开始: {{activity.startDate | format}}</span>
-                  <span>活动结束: {{activity.endDate | format}}</span>
-                  <span>{{activity.createDate | format}}</span>
+                  <span>(创建日期): {{activity.createDate | format}}</span>  
+                  <span>活动开始: {{activity.startDate}}</span>
+                  <span>活动结束: {{activity.endDate}}</span>
                   <span>阅读   {{activity.viewCounts}}</span>
                   <span>评论   {{activity.commentCounts}}</span>
                 </div>
@@ -75,7 +74,7 @@
                       :autosize="{ minRows: 2}"
                       placeholder="你的评论..."
                       class="me-view-comment-text"
-                      v-model="comment.content"
+                      v-model="reply.content"
                       resize="none">
                     </el-input>
                   </el-col>
@@ -113,14 +112,14 @@
   
   <script>
     import MarkdownEditor from '@/components/markdown/MarkdownEditor'
-    import CommmentItem from '@/components/comment/CommentItem'
+    import CommmentItem from '@/components/comment/ActivityCommentItem'
     import {viewActivity} from '@/api/activity'
     import {getCommentsByActivity, publishActivityComment} from '@/api/comment'
   
     import default_avatar from '@/assets/img/default_avatar.png'
   
     export default {
-      name: 'BlogView',
+      name: 'ActivityView',
       created() {
         this.getActivity()
       },
@@ -129,9 +128,9 @@
       },
       filters: {
         // ... 其他过滤器
-        format(value) {
-          return formatTime(value);
-        }
+        // format(value) {
+        //   return formatTime(value);
+        // }
       },
       data() {
         return {
@@ -158,7 +157,8 @@
           comment: {
             activity: {},
             content: ''
-          }
+          },
+          reply: this.getEmptyReply()
         }
       },
       computed: {
@@ -184,11 +184,11 @@
         getActivity() {
           let that = this
           viewActivity(that.$route.params.id).then(data => {
+            console.log(data.data)
             Object.assign(that.activity, data.data)
             that.activity.editor.value = data.data.body.content
             // 添加获取开始日期和结束日期的逻辑
-            this.activity.startDate = data.data.startDate; // 假设API返回的开始日期属性名为startDate
-            this.activity.endDate = data.data.endDate;     // 假设API返回的结束日期属性名为endDate
+
             that.getCommentsByActivity()
           }).catch(error => {
             if (error !== 'error') {
@@ -198,21 +198,22 @@
         },
         publishActivityComment() {
           let that = this
-          if (!that.comment.content) {
+          if (!that.reply.content) {
             return;
           }
-          that.comment.activity.id = that.activity.id
-  
-          publishActivityComment(that.comment).then(data => {
+          that.reply.activityId = that.activity.id
+          console.log(that.reply)
+          publishActivityComment(that.reply).then(data => {
             that.$message({type: 'success', message: '评论成功', showClose: true})
             that.comments.unshift(data.data)
             that.commentCountsIncrement()
             that.comment.content = ''
+            that.getActivity()
           }).catch(error => {
             if (error !== 'error') {
               that.$message({type: 'error', message: '评论失败', showClose: true})
             }
-          })
+          });
         },
         getCommentsByActivity() {
           let that = this
@@ -226,7 +227,15 @@
         },
         commentCountsIncrement() {
           this.activity.commentCounts += 1
-        }
+        },
+        getEmptyReply() {
+          return {
+            activityId: '',
+            parentId: '',
+            toUid: '',
+            content: ''
+          };
+      }
       },
       components: {
         'markdown-editor': MarkdownEditor,

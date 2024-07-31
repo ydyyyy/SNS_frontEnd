@@ -6,14 +6,8 @@ export function getActivitiesFinished(query, page) {
     url: '/activitiesFinished',
     method: 'get',
     params: {
-      pageNumber: page.pageNumber,
-      pageSize: page.pageSize,
-      name: page.name,
-      sort: page.sort,
-      year: query.year,
-      month: query.month,
-      ActivityTagId: query.ActivityTagId,
-      ActivityCategoryId: query.ActivityCategoryId
+      tagId: query.tagId,
+      categoryId: query.categoryId
     }
   })
 }
@@ -23,14 +17,8 @@ export function getActivitiesUnFinished(query, page) {
     url: '/activitiesUnFinished',
     method: 'get',
     params: {
-      pageNumber: page.pageNumber,
-      pageSize: page.pageSize,
-      name: page.name,
-      sort: page.sort,
-      year: query.year,
-      month: query.month,
-      ActivityTagId: query.ActivityTagId,
-      ActivityCategoryId: query.ActivityCategoryId
+      tagId: query.tagId,
+      categoryId: query.categoryId
     }
   })
 }
@@ -94,9 +82,9 @@ export function getActivityById(id) {
 }
 
 // 获取用户参加过的所有活动
-export function getUserActivities(userId) {
+export function getUserActivities() {
   return request({
-    url: `/activities/user/${userId}`,
+    url: `/activities/user`,
     method: 'get'
   });
 }

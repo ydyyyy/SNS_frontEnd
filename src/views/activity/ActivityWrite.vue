@@ -39,12 +39,19 @@
                             }}</el-checkbox>
                     </el-checkbox-group>
                 </el-form-item>
-                <el-form-item label="活动开始时间" prop="startDate">
-                    <el-date-picker v-model="activityForm.startDate" type="datetime" placeholder="选择活动开始时间"></el-date-picker>
-                </el-form-item>
-                <el-form-item label="活动结束时间" prop="endDate">
-                    <el-date-picker v-model="activityForm.endDate" type="datetime" placeholder="选择活动结束时间"></el-date-picker>
-                </el-form-item>
+                <el-date-picker
+                    v-model="activityForm.startDate"
+                    type="datetime"
+                    placeholder="选择活动开始时间"
+                    value-format="yyyy-MM-dd'T'HH:mm:ss"
+                ></el-date-picker>
+                <el-date-picker
+                    v-model="activityForm.endDate"
+                    type="datetime"
+                    placeholder="选择活动结束时间"
+                    value-format="yyyy-MM-dd'T'HH:mm:ss"
+                ></el-date-picker>
+
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="publishVisible = false">取消</el-button>
@@ -63,7 +70,7 @@ import { getAllCategorys } from "@/api/activityCategory";
 import { getAllTags } from "@/api/activityTag";
 
 export default {
-    name: "BlogWrite",
+    name: "ActivityWrite",
     mounted() {
         if (this.$route.params.id) {
             this.getActivityById(this.$route.params.id);
@@ -214,7 +221,6 @@ export default {
         },
         publish(activityForm) {
             let that = this;
-
             this.$refs[activityForm].validate((valid) => {
                 if (valid) {
                     let tags = this.activityForm.tags.map(function (item) {
@@ -234,7 +240,7 @@ export default {
                             contentHtml: this.activityForm.editor.ref.d_render,
                         },
                     };
-
+                    console.log(activity)
                     this.publishVisible = false;
 
                     let loading = this.$loading({
@@ -250,7 +256,7 @@ export default {
                                 type: "success",
                                 showClose: true,
                             });
-                            that.$router.push({ path: `/activity/view/${data.data.activityId}` });
+                            that.$router.push({ path: `/activity/view/${data.data.id}` });
                         })
                         .catch((error) => {
                             loading.close();

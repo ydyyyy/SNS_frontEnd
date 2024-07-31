@@ -23,11 +23,17 @@ export function publishComment(comment) {
   });
 }
 
+
 export function publishActivityComment(comment) {
   return request({
     url: '/activity/comments/create/change',
     method: 'post',
-    data: comment
-  })
+    data: {
+      activityId: comment.activityId,
+      content: comment.content,
+      parentId: comment.parentId,
+      toUid: comment.toUid
+    }
+  });
 }
 

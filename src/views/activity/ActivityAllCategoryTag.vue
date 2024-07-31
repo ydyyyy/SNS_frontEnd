@@ -80,7 +80,7 @@ export default {
     },
     methods: {
         view(id) {
-            this.$router.push({ path: `/blog/${this.currentActiveName}/${id}` });
+            this.$router.push({ path: `/activity/${this.currentActiveName}/${id}` });
         },
         getCategorys() {
             let that = this;
@@ -102,6 +102,7 @@ export default {
             let that = this;
             getAllTagsDetail()
                 .then((data) => {
+                    console.log("-------------",data)
                     that.tags = data.data;
                 })
                 .catch((error) => {

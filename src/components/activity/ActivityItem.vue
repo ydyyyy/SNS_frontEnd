@@ -7,7 +7,7 @@
                 <i class="el-icon-time"></i>&nbsp;{{ createDate | format }}
             </span>
             <span class="activity-count">
-                <i class="el-icon-date"></i>&nbsp;{{ startDate | format }} - {{ endDate | format }}
+                <i class="el-icon-date"></i>&nbsp;{{ startDate }} - {{ endDate }}
             </span>
         </div>
 
@@ -17,7 +17,7 @@
 
         <div class="activity-footer">
             <span class="activity-info">
-                <i class="el-icon-user"></i>&nbsp;{{ organizer }}
+                <i class="el-icon-user"></i>&nbsp;{{ author.nickname }}
             </span>
 
             <el-tag v-for="tag in tags" :key="tag.tagname" size="mini" type="info">{{ tag.tagname }}</el-tag>
@@ -43,7 +43,7 @@ export default {
         commentCounts: Number,  //评论数目
         createDate: String,   //发布日期
         summary: String,    //活动摘要
-        organizer: String,  //发布者
+        author: Object,  //发布者
         tags: Array,    //获取标签
         viewCounts: Number, //浏览数量
         startDate: String, // 添加开始日期属性

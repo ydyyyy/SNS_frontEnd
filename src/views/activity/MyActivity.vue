@@ -3,15 +3,15 @@
       <el-container class="me-ct-container">
         <el-main>
           <div class="me-ct-title me-area">
-            <img class="me-ct-picture" :src="user.avatar ? user.avatar : defaultAvatar" />
-            <h3 class="me-ct-name">{{ user.username }}</h3>
-            <span class="me-ct-meta">{{ user.activities.length }} 活动</span>
+            <img class="me-ct-picture" :src="author.avatar ? author.avatar : defaultAvatar" />
+            <h3 class="me-ct-name">{{ this.author.nickname }}</h3>
+            <span class="me-ct-meta">{{ this.activities.length }} 活动</span>
           </div>
   
           <div class="me-ct-activities">
-            <ScrollPage :loading="loading" :noData="noData" :offset="10" @load="loadMoreActivities">
-              <activity-item v-for="activity in user.activities" :key="activity.id" :activity="activity"></activity-item>
-            </ScrollPage>
+            <scroll-page :loading="loading" :offset="offset" :no-data="noData" v-on:load="load">
+              <activity-item v-for="activity in activities" :key="activity.id" v-bind="activity"></activity-item>
+            </scroll-page>
           </div>
         </el-main>
       </el-container>
@@ -32,38 +32,54 @@ export default {
   data() {
     return {
       defaultAvatar: defaultAvatar,
-      user: {
-        username: '',
-        avatar: '',
-        activities: []
+      author: {
+        i: 1,
+        account: "",
+        password: "",
+        avatar: "",
+        email: "",
+        phone: "",
+        nickname: "",
+        adminStatu: 0,
+        createTime: "",
+        updateTime: "",
+        sex: 0,
+        birth: "",
+        address: "",
+        position:"",
       },
+      activities: [],
       loading: false,
       noData: false,
-      page: 1,
-      pageSize: 10
     }
   },
   computed: {
     title() {
-      return `${this.user.username} - 参加过的活动 - For Fun`
+      return `${this.author.nickname} - 参加过的活动 - For Fun`
     }
   },
   methods: {
     getUserActivities() {
       this.loading = true
-      let userId = this.$store.state.user.id // Assuming user ID is stored in Vuex
-      getUserActivities(userId, this.page, this.pageSize).then(data => {
-        this.user = { ...this.$store.state.user, activities: data.data }
-        if (data.data.length < this.pageSize) {
-          this.noData = true
+      // let userId = this.$store.state.user.id // Assuming user ID is stored in Vuex
+      getUserActivities().then(data => {
+        if (data.data.length === 0) {
+          this.$message({ type: 'warning', message: '你没组织过任何活动！', showClose: true });
+          this.noData = true;
+        } else {
+          this.author = data.data.author;
+          this.activities = data.data;
+          this.author = data.data[0].author;
+          console.log(data.data[0]);
+          if (data.data.length < this.pageSize) {
+            this.noData = true;
+          }
         }
-        this.loading = false
+        this.loading = false;
       }).catch(error => {
-        if (error !== 'error') {
-          this.$message({ type: 'error', message: '活动加载失败', showClose: true })
-        }
-        this.loading = false
-      })
+        this.$message({ type: 'error', message: '活动加载失败', showClose: true });
+        this.loading = false;
+      });
     },
     loadMoreActivities() {
       if (this.noData) return

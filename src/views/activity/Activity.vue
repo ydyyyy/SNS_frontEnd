@@ -6,8 +6,7 @@
         <activity-un-finished-scroll-page></activity-un-finished-scroll-page>
       </el-main>
       <el-aside>
-        <card-me class="me-area"></card-me>
-        <card-tag :tags="hotTags"></card-tag>
+        <card-activity-tag :activityTags="hotTags"></card-activity-tag>
         <card-activity cardHeader="最热活动" :activities="hotActivities"></card-activity>
         <card-activity cardHeader="最新活动" :activities="newActivities"></card-activity>
       </el-aside>
@@ -19,7 +18,7 @@
 import CardActivityMe from '@/components/card/CardActivityMe'
 import CardActivity from '@/components/card/CardActivity'
 import CardArchive from '@/components/card/CardArchive'
-import CardActivityTag from '@/components/card/CardTag'
+import CardActivityTag from '@/components/card/CardActivityTag'
 import ActivityUnFinishedScrollPage from '@/views/common/ActivityUnFinishedScrollPage'
 import { getActivities, getHotActivities, getNewActivities } from '@/api/activity'
 import { getHotTags } from '@/api/activityTag'
@@ -73,7 +72,7 @@ export default {
   components: {
     'card-me': CardActivityMe,
     'card-activity': CardActivity,
-    'card-tag': CardActivityTag,
+    'card-activity-tag': CardActivityTag,
     ActivityUnFinishedScrollPage,
     CardArchive
   }

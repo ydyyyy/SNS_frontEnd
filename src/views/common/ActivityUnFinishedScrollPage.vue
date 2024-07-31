@@ -1,4 +1,3 @@
-
 <template>
     <scroll-page :loading="loading" :offset="offset" :no-data="noData" v-on:load="load">
         <activity-item v-for="activity in activities" :key="activity.id" v-bind="activity"></activity-item>
